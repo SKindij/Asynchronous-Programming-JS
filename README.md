@@ -8,4 +8,4 @@ I have currently employed in "Gant.UA" company as the B2B sales department chief
 My main responsibilities are:
 - CRM-system (Bitrix24) administration, control of office workers;
 - key participation in the project of implementation of the 1C-8.3 program (preparation of technical tasks on new blocks and functionality of the program, settings, testing);
-- - training, coordination, and control of employees;
+- training, coordination, and control of employees;
