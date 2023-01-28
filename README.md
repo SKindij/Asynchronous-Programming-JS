@@ -2,10 +2,12 @@
 JavaScript is single-threaded: only one task can run at a time :turkey:. 
 Browser gives us a Web API :lollipop: (DOM, setTimeout, HTTP requests, and so on). This can help us create some async, non-blocking behavior :eagle:. 
 
-```const foo = () => console.log("First: foo");
+``
+const foo = () => console.log("First: foo");
 const bar = () => setTimeout(() => console.log("Second: bar"), 500);
 const baz = () => console.log("Third: baz");
-	foo();     bar();     baz(); ```
+	foo();     bar();     baz(); 
+``
 
 When we invoke a function, it gets added to the call stack :waffle: (part of the JS engine, this isn’t browser specific) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.
 
