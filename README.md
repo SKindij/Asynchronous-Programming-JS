@@ -1,4 +1,4 @@
-# Asynchronous programming
+# Asynchronous programming in JavaScript and Node.js
 JavaScript is single-threaded: only one task can run at a time :turkey:. 
 Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and so on). This can help us create some async, non-blocking behavior :eagle:. 
 
@@ -72,7 +72,25 @@ A function passed to **process.nextTick()** is going to be executed on the curre
 
 ---
 ### The event loop executes tasks in the following order:
+1. **process.nextTick** queue (_...process.nextTick callback_)
+2. **promises microtask** queue (_...Promise.then() callback_)
+3. **macrotask** queue (_..setTimeout, setImmediate callback._)
 
+```javascript 
+     const baz = () => console.log('baz');
+     const foo = () => console.log('foo');
+     const zoo = () => console.log('zoo');
+     const start = () => {
+       console.log('start');     // № 1
+       setImmediate(baz);     // № 5
+       new Promise((resolve, reject) => { resolve('bar');
+         }).then((resolve) => {
+           console.log(resolve);     // № 3
+           process.nextTick(zoo); });     // № 4
+       process.nextTick(foo);     // № 2
+     };
+     start();
+```
 
 
 ---
