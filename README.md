@@ -46,5 +46,17 @@ The other way is a nested setTimeout, like this:<br>
        setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
 ```
 
+We can use the clearInterval() method to achieve a certain number of reruns of the function.<br>
+```javascript 
+     let count = 0;
+     const intervalId = setInterval(() => {
+        console.log('some action repeated every second');
+        count++;
+        if (count === 7) {
+	   console.log('Clearing the interval id after 7 executions');
+	   clearInterval(intervalId); }
+     }, 1000);
+```
+
 ###In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
 
