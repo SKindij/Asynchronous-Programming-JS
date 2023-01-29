@@ -8,7 +8,8 @@ When we invoke a function, it gets added to the **call stack** :waffle: (_part o
      const bar = () => setTimeout(() => console.log("Second: bar"), 2500);
      const fer = () => setTimeout(() => console.log("Third: fer"), 1500);
      const baz = () => console.log("Fourth: baz");
-			foo();     bar();       fer();      baz();        
+     const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);
+	    foo();     bar();    fer();   baz();    dif();      
 ```
 
 The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the second argument we passed to it.
