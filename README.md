@@ -15,5 +15,15 @@ The setTimeout lets us delay tasks without blocking the main thread. In the Web 
 The callback doesn’t immediately get added to the call stack, instead it’s passed to the queue.
  If the call stack is empty (all previously invoked functions have returned their values and have been popped off the stack), the first item in the queue gets added to the call stack. 
 
+Привет,
+мир!
 
+Привет,<пробел><пробел>
+пробел!
+
+Привет,\
+косая черта!
+
+Привет,<br>
+тег бр-р-р!
 
