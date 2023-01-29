@@ -6,7 +6,7 @@ When we invoke a function, it gets added to the **call stack** :waffle: (_part o
 ```javascript
      const foo = () => console.log("First: foo");
      const bar = () => setTimeout(() => console.log("Second: bar"), 2500);
-     const fer = () => setTimeout(() => console.log("Third: bar"), 1500);
+     const fer = () => setTimeout(() => console.log("Third: fer"), 1500);
      const baz = () => console.log("Fourth: baz");
 			foo();     bar();       fer();      baz();        
 ```
