@@ -4,10 +4,11 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 
 When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
 ```javascript
-     const foo = () => console.log("First: foo");  
-     const bar = () => setTimeout(() => console.log("Second: bar"), 500);
-     const baz = () => console.log("Third: baz");
-         foo();     bar();     baz();
+     const foo = () => console.log("First: foo");
+     const bar = () => setTimeout(() => console.log("Second: bar"), 2500);
+     const fer = () => setTimeout(() => console.log("Third: bar"), 1500);
+     const baz = () => console.log("Fourth: baz");
+			foo();     bar();       fer();      baz();        
 ```
 
 The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the second argument we passed to it.
@@ -38,7 +39,7 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
 The other way is a nested setTimeout, like this:<br>
 ```javascript 
        let timerId = setTimeout(function tick() {
-         alert('tick');
+         console.log('tick');
          timerId = setTimeout(tick, 2000); // (setTimeout schedules the next call right at the end of the current one )
        }, 2000);
        setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
