@@ -26,12 +26,23 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
        console.log(timerId); // same identifier
 ```
 
+##There are two ways of running something regularly.
 **setInterval** allows us to run a function repeatedly, starting after the interval of time, then repeating continuously at that interval.<br>
-```javascript
-       let intervalId = setInterval(func|code, [delay], [arg1], [arg2], ...);
+```javascript      
+       // repeat with the interval of 2 seconds
+       let intervalId = setInterval(() => console.log('tick'), 2000);
+       // after 7 seconds stop
+       setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
 ```
 
+The other way is a nested setTimeout, like this:<br>
+```javascript 
+       let timerId = setTimeout(function tick() {
+         alert('tick');
+         timerId = setTimeout(tick, 2000); // (setTimeout schedules the next call right at the end of the current one )
+       }, 2000);
+       setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
+```
 
-
-In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
+###In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
 
