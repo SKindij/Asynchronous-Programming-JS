@@ -63,6 +63,7 @@ To execute some piece of code asynchronously use the **setImmediate()** function
 ```javascript 
         setImmediate( () => {  console.log('run something');  }  );
 ```
+
 Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.<br>
 A ***setTimeout()*** callback with a 0ms delay is very similar to ***setImmediate()***. The execution order will depend on various factors.<br>
 
@@ -70,10 +71,11 @@ A function passed to **process.nextTick()** is going to be executed on the curre
 ```javascript 
        process.nextTick( () => {  console.log('do something');  }  );
 ```
+
 It's the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.<br>
 Use nextTick() when you want to make sure that in the next event loop iteration that code is already executed.<br>
 ---
-### The event loop executes tasks in the following order:
+#### The event loop executes tasks in the following order:<br>
 1. **process.nextTick** queue (_...process.nextTick callback_)
 2. **promises microtask** queue (_...Promise.then() callback_)
 3. **macrotask** queue (_..setTimeout, setImmediate callback._)
