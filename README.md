@@ -58,13 +58,23 @@ We can use the **clearInterval()** method to achieve a certain number of reruns 
      }, 1000);
 ```
 
-To execute some piece of code asynchronously, but as soon as possible, use the **setImmediate()** function provided by Node.js:<br>
+---
+To execute some piece of code asynchronously, but as soon as possible, use the **setImmediate()** function provided **by Node.js**:<br>
 ```javascript 
-        setImmediate(() => {  console.log(‘run something’);  }  );
+        setImmediate(() => {  console.log('run something');  }  );
 ```
-Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the event loop.
+Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.<br>
+A ***setTimeout()*** callback with a 0ms delay is very similar to ***setImmediate()***. The execution order will depend on various factors.<br>
+
+A function passed to **process.nextTick()** is going to be executed on the current iteration of the **event loop**, after the current operation ends. This means it will always execute before setTimeout and setImmediate.<br>
 
 
 
-###In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
+---
+### The event loop executes tasks in the following order:
+
+
+
+---
+In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
 
