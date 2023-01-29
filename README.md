@@ -28,7 +28,7 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
        console.log(timerId); // same identifier
 ```
 
-##There are two ways of running something regularly.
+There are two ways of running something regularly.
 **setInterval** allows us to run a function repeatedly, starting after the interval of time, then repeating continuously at that interval.<br>
 ```javascript      
        // repeat with the interval of 2 seconds
@@ -37,7 +37,7 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
        setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
 ```
 
-The other way is a nested setTimeout, like this:<br>
+The other way is a **nested setTimeout**, like this:<br>
 ```javascript 
        let timerId = setTimeout(function tick() {
          console.log('tick');
@@ -46,7 +46,7 @@ The other way is a nested setTimeout, like this:<br>
        setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
 ```
 
-We can use the clearInterval() method to achieve a certain number of reruns of the function.<br>
+We can use the **clearInterval()** method to achieve a certain number of reruns of the function.<br>
 ```javascript 
      let count = 0;
      const intervalId = setInterval(() => {
@@ -57,6 +57,14 @@ We can use the clearInterval() method to achieve a certain number of reruns of t
 	   clearInterval(intervalId); }
      }, 1000);
 ```
+
+To execute some piece of code asynchronously, but as soon as possible, use the **setImmediate()** function provided by Node.js:<br>
+```javascript 
+        setImmediate(() => {  console.log(‘run something’);  }  );
+```
+Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the event loop.
+
+
 
 ###In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
 
