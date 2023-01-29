@@ -4,11 +4,11 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 
 When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
 ```javascript
-     const foo = () => console.log("First: foo");
-     const bar = () => setTimeout(() => console.log("Second: bar"), 2500);
-     const fer = () => setTimeout(() => console.log("Third: fer"), 1500);
-     const baz = () => console.log("Fourth: baz");
-     const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);
+     const foo = () => console.log("First: foo");                                 // № 1
+     const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
+     const fer = () => setTimeout(() => console.log("Third: fer"), 1500);         // № 4
+     const baz = () => console.log("Fourth: baz");                                // № 2
+     const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);            // № 3
 	    foo();     bar();    fer();   baz();    dif();      
 ```
 
@@ -81,13 +81,13 @@ A function passed to **process.nextTick()** is going to be executed on the curre
      const foo = () => console.log('foo');
      const zoo = () => console.log('zoo');
      const start = () => {
-       console.log('start');     // № 1
-       setImmediate(baz);     // № 5
+       console.log('start');                                // № 1
+       setImmediate(baz);                                   // № 5
        new Promise((resolve, reject) => { resolve('bar');
          }).then((resolve) => {
-           console.log(resolve);     // № 3
-           process.nextTick(zoo); });     // № 4
-       process.nextTick(foo);     // № 2
+           console.log(resolve);                            // № 3
+           process.nextTick(zoo); });                       // № 4
+       process.nextTick(foo);                               // № 2
      };
      start();
 ```
