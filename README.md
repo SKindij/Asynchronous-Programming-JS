@@ -3,9 +3,9 @@ JavaScript is single-threaded: only one task can run at a time :turkey:.
 Browser gives us a Web API :lollipop: (DOM, setTimeout, HTTP requests, and so on). This can help us create some async, non-blocking behavior :eagle:. 
 
 ``
-const foo = () => console.log("First: foo");
-const bar = () => setTimeout(() => console.log("Second: bar"), 500);
-const baz = () => console.log("Third: baz");
+const foo = () => console.log("First: foo");  
+const bar = () => setTimeout(() => console.log("Second: bar"), 500);\
+const baz = () => console.log("Third: baz");<br>
 	foo();     bar();     baz(); 
 ``
 
