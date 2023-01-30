@@ -104,15 +104,30 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 ### ES6 introduced Promises.
 
 We can create a promise, using a Promise constructor that receives a callback.<br>
-
-```javascript          new Promise ( () => { console.log('something') } ); ```
-
 > *A Promise is an object that contains a status and a value.* 
+```javascript
+                 new Promise ( () => { console.log('something') } );
 ```
-                      [[Prototype]]: Promise
-                           [[PromiseState]]: "pending"
-                           [[PromiseResult]]: undefined
+>              [[Prototype]]: Promise
+> >                [[PromiseState]]: "pending"
+> >                [[PromiseResult]]: undefined
+   
+```javascript 
+                 new Promise ( (resolve, reject) => resolve('oh yea, was res') );
 ```
+>              [[Prototype]]: Promise
+> >                [[PromiseState]]: "fulfilled"
+> >                [[PromiseResult]]: "oh yea, was res"
+
+```javascript 
+                 new Promise ( (resolve, reject) => reject(''oh no, was rej') );
+```
+>              [[Prototype]]: Promise
+> >                [[PromiseState]]: "fulfilled"
+> >                [[PromiseResult]]: "'oh no, was rej"
+
+
+
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
 |:------------:|:---------------------------------------------------------------:|:----------:|
@@ -122,11 +137,11 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 | settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
 
 
-```javascript          new Promise ( (resolve, reject) => resolve('some res') ); ```
-```
-                             [[PromiseState]]: "fulfilled"
-                             [[PromiseResult]]: "some res"
-```
+
+
+
+
+
 
 
 
