@@ -33,7 +33,7 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
 
 #### There are two ways of running something regularly.<br>
 
-**setInterval** allows us to run a function repeatedly, starting after the interval of time, then repeating continuously at that interval.<br>
+**setInterval** starts a function after the interval of time, then repeating to run a function continuously at that interval.<br>
 ```javascript      
        // repeat with the interval of 2 seconds
        let intervalId = setInterval(() => console.log('tick'), 2000);
@@ -68,15 +68,15 @@ To execute some piece of code asynchronously use the **setImmediate()** function
         setImmediate( () => { console.log('run something'); } );
 ```
 
-Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.<br>
-A ***setTimeout()*** callback with a 0ms delay is very similar to ***setImmediate()***. The execution order will depend on various factors.<br>
+Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.
+A ``setTimeout() callback`` with a 0ms delay is very similar to ``setImmediate()``. The execution order will depend on various factors.<br>
 
 A function passed to **process.nextTick()** is going to be executed on the current iteration of the **event loop**, after the current operation ends. This means it will always execute before setTimeout and setImmediate.<br>
 ```javascript 
       process.nextTick( () => { console.log('do something'); } );
 ```
 
-It is the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.<br>
+It is the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.
 Use nextTick() when you want to make sure that in the next event loop iteration that code is already executed.<br>
 
 ---
