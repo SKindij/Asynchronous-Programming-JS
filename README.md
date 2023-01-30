@@ -105,13 +105,13 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 
 We can create a promise, using a Promise constructor that receives a callback.<br>
 
-```javascript          new Promise ( () => { console.log('something') } );```
+```javascript          new Promise ( () => { console.log('something') } ); ```
 
 > *A Promise is an object that contains a status and a value.* 
 ```
-           [[Prototype]]: Promise
-                    [[PromiseState]]: "pending"
-                    [[PromiseResult]]: undefined
+                      [[Prototype]]: Promise
+                           [[PromiseState]]: "pending"
+                           [[PromiseResult]]: undefined
 ```
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
@@ -119,12 +119,14 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 | pending ⏳    | means the operation is still running and the promise is pending |            |
 | fulfilled ✅ | the operation was completed and it was successful               | .then()    |
 | rejected ❌  | the operation was completed but there was an error              | .catch()   |
-| rejected     | resolved or rejected, either way this callback gets called      | .finally() |
+| settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
 
 
-
-
-
+```javascript          new Promise ( (resolve, reject) => resolve('some res') ); ```
+```
+                             [[PromiseState]]: "fulfilled"
+                             [[PromiseResult]]: "some res"
+```
 
 
 
