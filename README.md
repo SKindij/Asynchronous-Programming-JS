@@ -101,6 +101,28 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
      start();
 ```
 ---
+### ES6 introduced Promises.
+
+We can create a promise, using a Promise constructor that receives a callback.<br>
+
+```          new Promise ( () => { console.log('something') } );```
+
+> A Promise is an object that contains a status and a value. 
+```
+     [[Prototype]]: Promise
+        [[PromiseState]]: "pending"
+        [[PromiseResult]]: undefined
+```
+
+
+
+
+
+
+
+
+
+
 Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is `fulfilled` or `rejected`, and will only get called when the operation has completed.
 
 | STATE      | DESCRIPTION                                                     | CALLBCAK   |
