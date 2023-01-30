@@ -3,6 +3,9 @@ JavaScript is single-threaded: only one task can run at a time :turkey:.
 Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and so on). This can help us create some async, non-blocking behavior :eagle:. 
 
 When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
+___
+
+### Timing Events
 ```javascript
      const foo = () => console.log("First: foo");                                 // № 1
      const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
@@ -28,7 +31,8 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
        console.log(timerId); // same identifier
 ```
 
-There are two ways of running something regularly.
+#### There are two ways of running something regularly.<br>
+
 **setInterval** allows us to run a function repeatedly, starting after the interval of time, then repeating continuously at that interval.<br>
 ```javascript      
        // repeat with the interval of 2 seconds
@@ -97,5 +101,27 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
      start();
 ```
 ---
+Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is `fulfilled` or `rejected`, and will only get called when the operation has completed.
+
+| STATE      | DESCRIPTION                                                     | CALLBCAK   |
+|:----------:|:---------------------------------------------------------------:|:----------:|
+| pending    | means the operation is still running and the promise is pending |            |
+| fulfilled  | the operation was completed and it was successful               | .then()    |
+| rejected   | the operation was completed but there was an error              | .catch()   |
+| rejected   | resolved or rejected, either way this callback gets called      | .finally() |
+
+```javascript 
+        fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
+		     } ).catch( (error) => {  console.log('this will get called when the promise is rejected');
+		     } ).finally( () => {  console.log('this will get called all the time');  } );
+```
+
+The ''.then()'' callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
+
+
+
+
+
+___
 In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
 
