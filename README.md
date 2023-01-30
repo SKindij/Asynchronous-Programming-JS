@@ -81,9 +81,10 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 
 ---
 #### The event loop executes tasks in the following order:<br>
-1. **process.nextTick** queue (_...process.nextTick callback_)
-2. **promises microtask** queue (_...Promise.then() callback_)
-3. **macrotask** queue (_..setTimeout, setImmediate callback._)
+1. **microtask** queue (_...process.nextTick callback_)
+2. **microtask** queue (_...Promise.then() callback, async function_)
+3. **macrotask** queue (_..setTimeout, setInterval callback_)
+4. **macrotask** queue (_..setImmediate callback_)
 
 ```javascript 
      const baz = () => console.log('baz');
@@ -100,7 +101,7 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
      };
      start();
 ```
----
+___
 ### ES6 introduced Promises.
 
 We can create a promise, using a Promise constructor that receives a callback.<br>
@@ -120,7 +121,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 >                 [[PromiseResult]]: "oh yea, was res"
 
 ```javascript 
-                 new Promise ( (resolve, reject) => reject(''oh no, was rej') );
+                 new Promise ( (resolve, reject) => reject('oh no, was rej') );
 ```
 >              [[Prototype]]: Promise
 >                 [[PromiseState]]: "fulfilled"
@@ -142,9 +143,15 @@ Typically **promise** is used to manage situations where you must wait for the o
 ```
 
 The ''.then()'' callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
+
 ```javascript 
        Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
 ```
+___
+### ES7 Async/Await.
+
+
+
 
 
 ___
