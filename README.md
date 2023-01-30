@@ -124,7 +124,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 ```
 >              [[Prototype]]: Promise
 >                 [[PromiseState]]: "fulfilled"
->                 [[PromiseResult]]: "'oh no, was rej"
+>                 [[PromiseResult]]: "oh no, was rej"
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
 |:------------:|:---------------------------------------------------------------:|:----------:|
@@ -142,9 +142,9 @@ Typically **promise** is used to manage situations where you must wait for the o
 ```
 
 The ''.then()'' callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
-
-
-
+```javascript 
+       Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
+```
 
 
 ___
