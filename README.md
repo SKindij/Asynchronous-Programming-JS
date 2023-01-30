@@ -109,25 +109,22 @@ We can create a promise, using a Promise constructor that receives a callback.<b
                  new Promise ( () => { console.log('something') } );
 ```
 >              [[Prototype]]: Promise
-> >                [[PromiseState]]: "pending"
-> >                [[PromiseResult]]: undefined
+>                 [[PromiseState]]: "pending"
+>                 [[PromiseResult]]: undefined
    
 ```javascript 
                  new Promise ( (resolve, reject) => resolve('oh yea, was res') );
 ```
 >              [[Prototype]]: Promise
-> >                [[PromiseState]]: "fulfilled"
-> >                [[PromiseResult]]: "oh yea, was res"
+>                 [[PromiseState]]: "fulfilled"
+>                 [[PromiseResult]]: "oh yea, was res"
 
 ```javascript 
                  new Promise ( (resolve, reject) => reject(''oh no, was rej') );
 ```
 >              [[Prototype]]: Promise
-> >                [[PromiseState]]: "fulfilled"
-> >                [[PromiseResult]]: "'oh no, was rej"
-
-
-
+>                 [[PromiseState]]: "fulfilled"
+>                 [[PromiseResult]]: "'oh no, was rej"
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
 |:------------:|:---------------------------------------------------------------:|:----------:|
@@ -136,18 +133,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 | rejected ❌  | the operation was completed but there was an error              | .catch()   |
 | settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
 
-
-
-
-
-
-
-
-
-
 Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is `fulfilled` or `rejected`, and will only get called when the operation has completed.
-
-
 
 ```javascript 
         fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
