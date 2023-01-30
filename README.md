@@ -124,7 +124,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
                  new Promise ( (resolve, reject) => reject('oh no, was rej') );
 ```
 >              [[Prototype]]: Promise
->                 [[PromiseState]]: "fulfilled"
+>                 [[PromiseState]]: "rejected"
 >                 [[PromiseResult]]: "oh no, was rej"
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
