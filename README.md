@@ -82,11 +82,11 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 ---
 #### The event loop executes tasks in the following order:<br>
 1. **call stack** (_...function()_)
-2. **microtask** queue (_...process.nextTick callback_)
-3. **microtask** queue (_...Promise.then() callback, async function()_)
-4. **macrotask** queue (_..setTimeout(callback, 0)_)
-5. **macrotask** queue (_..setImmediate callback_)
-6. **macrotask** queue (_..setTimeout(callback, n), setInterval callback_)
+2. **microtask** queue (_ ...process.nextTick callback _)
+3. **microtask** queue (_ ...Promise.then() callback, async function() _)
+4. **macrotask** queue (_ ...setTimeout(callback, 0) _)
+5. **macrotask** queue (_ ...setImmediate callback _)
+6. **macrotask** queue (_ ...setTimeout(callback, n), setInterval callback _)
 
 ```javascript 
      const baz = () => console.log('baz');
@@ -150,7 +150,7 @@ The ''.then()'' callback is not really the end. That's because when you return v
        Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
 ```
 ___
-### ES7 Async/Await.
+### ES7 introduced Async/Await.
 
 
 
