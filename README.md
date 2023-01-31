@@ -81,9 +81,9 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 
 ---
 #### The event loop executes tasks in the following order:<br>
-1. **microtask** queue (_..._)
+1. **call stack** (_...function()_)
 2. **microtask** queue (_...process.nextTick callback_)
-3. **microtask** queue (_...Promise.then() callback, async function_)
+3. **microtask** queue (_...Promise.then() callback, async function()_)
 4. **macrotask** queue (_..setTimeout(callback, 0)_)
 5. **macrotask** queue (_..setImmediate callback_)
 6. **macrotask** queue (_..setTimeout(callback, n), setInterval callback_)
