@@ -136,7 +136,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 | rejected ❌  | the operation was completed but there was an error              | .catch()   |
 | settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
 
-Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is `fulfilled` or `rejected`, and will only get called when the operation has completed.
+Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
 
 ```javascript 
         fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
@@ -144,7 +144,7 @@ Typically **promise** is used to manage situations where you must wait for the o
 		     } ).finally( () => {  console.log('this will get called all the time');  } );
 ```
 
-The ''.then()'' callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
+The ``.then()`` callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
 
 ```javascript 
        Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
@@ -153,12 +153,12 @@ ___
 ### ES7 introduced Async/Await.
 With the async and await keywords, we can create async functions which implicitly return a promise.<br>
 
-When encountering an 'await' keyword, the execution of the 'async function' body gets paused ✋🏼. And the rest of the 'async function' gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
+When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
 
 
 
 ___
-Did you notice how **async functions** are different compared to a **promise.then**? The 'await' keyword suspends the 'async function', whereas the 'Promise' body would've kept on being executed if we would've used '.then'!
+Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
 
 ___
 In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
