@@ -151,10 +151,14 @@ The ''.then()'' callback is not really the end. That's because when you return v
 ```
 ___
 ### ES7 introduced Async/Await.
+With the async and await keywords, we can create async functions which implicitly return a promise.<br>
+
+When encountering an 'await' keyword, the execution of the 'async function' body gets paused ✋🏼. And the rest of the 'async function' gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
 
 
 
-
+___
+Did you notice how **async functions** are different compared to a **promise.then**? The 'await' keyword suspends the 'async function', whereas the 'Promise' body would've kept on being executed if we would've used '.then'!
 
 ___
 In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
