@@ -15,7 +15,7 @@ ___
 	    foo();     bar();    fer();   baz();    dif();      
 ```
 
-The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the second argument we passed to it.
+The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the 2-nd argument we passed to it.
 The ***callback*** doesn’t immediately get added to the **call stack**, instead it’s passed to the **queue**.
  If the **call stack** is empty (_all previously invoked functions have returned their values and have been popped off the stack_), the first item in the **queue** gets added to the **call stack**.<br>
 ```javascript
@@ -142,6 +142,19 @@ Typically **promise** is used to manage situations where you must wait for the o
         fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
 		     } ).catch( (error) => {  console.log('this will get called when the promise is rejected');
 		     } ).finally( () => {  console.log('this will get called all the time');  } );
+```
+
+To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with a fatal exception.<br>
+
+```javascript 
+	const fs = require('fs');
+	const myPromise = new Promise( (resolve, reject) => {
+	  fs.readFile( 'example.json', (err, data) => {
+	    if (err) { reject(err);
+	    } else { resolve(data); }  } );
+	} );
+	myPromise.then( data => console.log(JSON.parse(data)) ).catch( err => console.log(err) );
+	console.log('keep runing code');
 ```
 
 The ``.then()`` callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
