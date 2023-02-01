@@ -162,6 +162,18 @@ The ``.then()`` callback is not really the end. That's because when you return v
 ```javascript 
        Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
 ```
+
+Let's have a look at an example for fetching the json placeholder API to get some todos.
+
+```javascript 
+	fetch('https://jsonplaceholder.typicode.com/todos')
+	  .then(response => response.json())
+	  .then(json => console.log(json))
+	  .catch(err => console.log(err));
+```
+
+We ``fetch`` some JSON data via an HTTP request. The **fetch function** returns a **promise**, which will either ``resolve`` or ``reject``. The **response body** has a json method for parsing the response from JSON to an object. ``.then`` returns a promise of its own, which handle by attaching another ``.then`` handler, and in case of **error** we attach a ``catch`` handler and log the error.
+
 ___
 ### ES7 introduced Async/Await.
 With the async and await keywords, we can create async functions which implicitly return a promise.<br>
