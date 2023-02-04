@@ -6,9 +6,14 @@
 - [x] functor + chaining + composition 
 
 **contracts:** ``(...args, callback) => callback(err, data);``
+___
 
+### Code examples
 
-
+> If we want to make a certain time delay. <br>
+> In the file ***timers.js*** inside the function ``delay()`` we use...
+> > - while() / new Date().getTime()
+> > - async () / await / new Promise() / setTimeout()
 
 
 
