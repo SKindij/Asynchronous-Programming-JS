@@ -14,6 +14,6 @@ ___
 > In the file ***timers.js*** inside the function ``delay()`` we use...
 > > - while() / new Date().getTime()
 > > - async () / await / new Promise() / setTimeout()
-
+> > - new Promise() / setTimeout() / .then()
 
 
