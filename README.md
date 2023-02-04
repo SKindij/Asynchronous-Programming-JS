@@ -201,5 +201,5 @@ ___
 Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
 
 ___
-In a ***browser*** the timer identifier is a number. For instance, ***Node.js*** returns a timer object with additional methods.
+Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-JS-Nodejs/tree/main/codeApplication)...
 
