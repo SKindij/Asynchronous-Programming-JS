@@ -180,7 +180,22 @@ With the async and await keywords, we can create async functions which implicitl
 
 When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
 
-
+```javascript
+	function checkRequestCorrectness(request) {
+		return new Promise( (resolve, reject) => {
+			if (request == 'SKJ.com') { resolve(`Request is correct. :) Connected to ${ request}`);
+			} else { reject(`Connection failed :( . Query to ${ request} is invalid.`); }
+		} );
+	};
+	async function doStuff(request) {
+		console.log(`you have attempted a request to ${ request}`);
+		try { const response = await checkRequestCorrectness(request);
+			console.log(response);
+		} catch (err) {	console.log(err); }
+	};
+	doStuff('ERG.com');  doStuff('SKJ.com');   doStuff('SMT.com');
+    console.log('The results of the answers will be as follows:');
+```
 
 ___
 Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
