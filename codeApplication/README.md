@@ -8,12 +8,20 @@
 **contracts:** ``(...args, callback) => callback(err, data);``
 ___
 
-### Code examples
+### file timers.js
 
 > If we want to make a certain time delay. <br>
-> In the file ***timers.js*** inside the function ``delay()`` we use...
+> inside the function ``delay()`` we use...
 > > - while() / new Date().getTime()
 > > - async () / await / new Promise() / setTimeout()
 > > - new Promise() / setTimeout() / .then()
+___
+
+### file callbacks.js
+
+
+
+
+
 
 
