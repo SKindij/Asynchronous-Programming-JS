@@ -7,6 +7,7 @@
 
 **contracts:** ``(...args, callback) => callback(err, data);``
 ___
+## You can find code examples in the files mentioned below.
 
 ### file timers.js
 
@@ -19,9 +20,9 @@ ___
 
 ### file callbacks.js
 
-
-
-
-
-
+> Here we specify the emulation of asynchronous calls:
+> > - reading of configuration;
+> > - executing SQL query;
+> > - making GET request;
+> > - reading a file;
 
