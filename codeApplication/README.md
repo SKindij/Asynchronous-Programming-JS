@@ -36,3 +36,6 @@ ___
 
 ### file workSamplePromise.js
 ***The Promise() constructor takes a function as an argument.***
+> Promises are useful when you have to handle more than one asynchronous task, one after another. 
+> > Here we will also use a function ``doСomplexWork()`` with three arguments.
+> > And here ``.then()`` will come in handy.
