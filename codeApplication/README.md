@@ -26,3 +26,12 @@ ___
 > > - making GET request;
 > > - reading a file;
 
+___
+
+**A callback is a function that must be executed after another function has completed its work.**
+### file workSampleCallback.js
+> Imagine that a complex task has to be performed at the enterprise.
+> > We will use ``function doСomplexWork(firstTask, secondTask, callback)`` that accepts three arguments.
+> > We will also have two functions ``doTesting()`` and ``doPacking()``, that we'll alternate between using as callbacks.
+
+
