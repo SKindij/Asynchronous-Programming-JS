@@ -23,18 +23,24 @@ function doPacking() { // A function that will be passed as a callback.
 };  
 
 let hasDeliveryArrived = true;
+let quantityGoods = 300;
 let isElectricity = true;
  
 function doСomplexWork(firstTask, secondTask, mainTask) { 
   return new Promise( (resolve, reject) => { 
    // let success = setTimeout(() => doSimpleWork(firstTask), 2000);     
-      if (doSimpleWork(firstTask)) {  resolve();
+      if (doSimpleWork(firstTask)) { resolve(quantityGoods);
       } else { reject('Сomplex work has failed.'); }
   } )
-  .then( () => { console.log(`2. Process < ${secondTask} > has been executed.`) } )
-  .then( () => { mainTask() } )
-  .then( () => { console.log('Сomplex work is done.') } )
-  .catch( (error) => { console.log(error); } );
+  .then( (result) => { console.log(result);
+          console.log(`2. Process < ${secondTask} > has been executed.`);
+          return result * Number((Math.random() * (1 - 0.8) + 0.8).toFixed(2)); } )
+  .then( (result) => { console.log(result);
+          if (mainTask()) { return result * Number((Math.random() * (1 - 0.8) + 0.8).toFixed(2));
+          } else { reject('Сomplex work has failed.');} })
+  .then( (result) => { console.log(result);
+           console.log('Сomplex work is done.'); } )
+  .catch( (error) => { console.log(error); } )
 };
 
 doСomplexWork('Unload parts at the warehouse № 1.', 'Bring the parts to the engineering department.', doTesting);
