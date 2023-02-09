@@ -114,7 +114,9 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 >              [[Prototype]]: Promise
 >                 [[PromiseState]]: "pending"
 >                 [[PromiseResult]]: undefined
-   
+ 
+![promise-executing](https://github.com/SKindij/Asynchronous-JS-Nodejs/blob/main/codeApplication/promise-executor.jpg "promise-executing") 
+
 ```javascript 
                  new Promise ( (resolve, reject) => resolve('oh yea, was res') );
 ```
@@ -128,6 +130,15 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 >              [[Prototype]]: Promise
 >                 [[PromiseState]]: "rejected"
 >                 [[PromiseResult]]: "oh no, was rej"
+
+
+
+
+
+
+
+
+
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
 |:------------:|:---------------------------------------------------------------:|:----------:|
