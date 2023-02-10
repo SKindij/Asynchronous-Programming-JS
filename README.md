@@ -1,8 +1,8 @@
 # Asynchronous programming in JavaScript and Node.js
-JavaScript is single-threaded: only one task can run at a time :turkey:. 
+&emsp;JavaScript is single-threaded: only one task can run at a time :turkey:. 
 Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and so on). This can help us create some async, non-blocking behavior :eagle:. 
 
-When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
+&emsp;When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
 ___
 
 ### Timing Events
@@ -23,7 +23,7 @@ The ***callback*** doesn’t immediately get added to the **call stack**, instea
        clearTimeout(timerId);
 ```
 
-A call to **setTimeout** returns a “timer identifier” ***timerId*** that we can use to cancel the execution.<br>
+&emsp;A call to **setTimeout** returns a “timer identifier” ***timerId*** that we can use to cancel the execution.<br>
 ```javascript
      let timerId = setTimeout(() => console.log("never happens"), 1000);
        console.log(timerId); // timer identifier
@@ -33,7 +33,7 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
 
 #### There are two ways of running something regularly.<br>
 
-**setInterval** starts a function after the interval of time, then repeating to run a function continuously at that interval.<br>
+&emsp;**setInterval** starts a function after the interval of time, then repeating to run a function continuously at that interval.<br>
 ```javascript      
        // repeat with the interval of 2 seconds
        let intervalId = setInterval(() => console.log('tick'), 2000);
@@ -41,7 +41,7 @@ A call to **setTimeout** returns a “timer identifier” ***timerId*** that we 
        setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
 ```
 
-The other way is a **nested setTimeout**, like this:<br>
+&emsp;The other way is a **nested setTimeout**, like this:<br>
 ```javascript 
        let timerId = setTimeout(function tick() {
          console.log('tick');
@@ -50,7 +50,7 @@ The other way is a **nested setTimeout**, like this:<br>
        setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
 ```
 
-We can use the **clearInterval()** method to achieve a certain number of reruns of the function.<br>
+&emsp;We can use the **clearInterval()** method to achieve a certain number of reruns of the function.<br>
 ```javascript 
      let count = 0;
      const intervalId = setInterval(() => {
@@ -63,23 +63,25 @@ We can use the **clearInterval()** method to achieve a certain number of reruns 
 ```
 
 ---
-To execute some piece of code asynchronously use the **setImmediate()** function provided **by Node.js**:<br>
+
+&emsp;To execute some piece of code asynchronously use the **setImmediate()** function provided **by Node.js**:<br>
 ```javascript 
         setImmediate( () => { console.log('run something'); } );
 ```
 
-Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.
+&emsp;Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.
 A ``setTimeout() callback`` with a 0ms delay is very similar to ``setImmediate()``. The execution order will depend on various factors.<br>
 
-A function passed to **process.nextTick()** is going to be executed on the current iteration of the **event loop**, after the current operation ends. This means it will always execute before setTimeout and setImmediate.<br>
+&emsp;A function passed to **process.nextTick()** is going to be executed on the current iteration of the **event loop**, after the current operation ends. This means it will always execute before setTimeout and setImmediate.<br>
 ```javascript 
       process.nextTick( () => { console.log('do something'); } );
 ```
 
-It is the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.
+&emsp;It is the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.
 Use nextTick() when you want to make sure that in the next event loop iteration that code is already executed.<br>
 
 ---
+
 #### The event loop executes tasks in the following order:<br>
 1. **call stack** (_...function()_)
 2. **microtask** queue (_ ...process.nextTick callback _)
@@ -106,7 +108,7 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 ___
 ### ES6 introduced Promises.
 
-We can create a promise, using a Promise constructor that receives a callback.<br>
+&emsp;We can create a promise, using a Promise constructor that receives a callback.<br>
 > *A Promise is an object that contains a status and a value.* 
 ```javascript
                  new Promise ( () => { console.log('something') } );
@@ -115,7 +117,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 >                 [[PromiseState]]: "pending"
 >                 [[PromiseResult]]: undefined
  
-![promise-executing](https://github.com/SKindij/Asynchronous-JS-Nodejs/blob/main/codeApplication/promise-executor.jpg "promise-executing") 
+&emsp; &emsp; &emsp; &emsp; ![promise-executing](https://github.com/SKindij/Asynchronous-JS-Nodejs/blob/main/codeApplication/promise-executor.jpg "promise-executing") 
 
 ```javascript 
                  new Promise ( (resolve, reject) => resolve('oh yea, was res') );
@@ -131,15 +133,6 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 >                 [[PromiseState]]: "rejected"
 >                 [[PromiseResult]]: "oh no, was rej"
 
-
-
-
-
-
-
-
-
-
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
 |:------------:|:---------------------------------------------------------------:|:----------:|
 | pending ⏳    | means the operation is still running and the promise is pending |            |
@@ -147,7 +140,7 @@ We can create a promise, using a Promise constructor that receives a callback.<b
 | rejected ❌  | the operation was completed but there was an error              | .catch()   |
 | settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
 
-Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
+&emsp;Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
 
 ```javascript 
         fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
@@ -155,7 +148,7 @@ Typically **promise** is used to manage situations where you must wait for the o
 		     } ).finally( () => {  console.log('this will get called all the time');  } );
 ```
 
-To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with a fatal exception.<br>
+&emsp;To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with a fatal exception.<br>
 
 ```javascript 
 	const fs = require('fs');
@@ -168,13 +161,13 @@ To handle errors with ``catch`` is best practice. Unhandled Promise rejections w
 	console.log('keep runing code');
 ```
 
-The ``.then()`` callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
+&emsp;The ``.then()`` callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
 
 ```javascript 
        Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
 ```
 
-Let's have a look at an example for fetching the json placeholder API to get some todos.
+&emsp;Let's have a look at an example for fetching the json placeholder API to get some todos.
 
 ```javascript 
 	fetch('https://jsonplaceholder.typicode.com/todos')
@@ -183,13 +176,13 @@ Let's have a look at an example for fetching the json placeholder API to get som
 	  .catch(err => console.log(err));
 ```
 
-We ``fetch`` some JSON data via an HTTP request. The **fetch function** returns a **promise**, which will either ``resolve`` or ``reject``. The **response body** has a json method for parsing the response from JSON to an object. ``.then`` returns a promise of its own, which handle by attaching another ``.then`` handler, and in case of **error** we attach a ``catch`` handler and log the error.
+&emsp;We ``fetch`` some JSON data via an HTTP request. The **fetch function** returns a **promise**, which will either ``resolve`` or ``reject``. The **response body** has a json method for parsing the response from JSON to an object. ``.then`` returns a promise of its own, which handle by attaching another ``.then`` handler, and in case of **error** we attach a ``catch`` handler and log the error.
 
 ___
 ### ES7 introduced Async/Await.
-With the async and await keywords, we can create async functions which implicitly return a promise.<br>
+&emsp;With the async and await keywords, we can create async functions which implicitly return a promise.<br>
 
-When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
+&emsp;When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
 
 ```javascript
 	function checkRequestCorrectness(request) {
@@ -209,8 +202,8 @@ When encountering an ``await`` keyword, the execution of the ``async function`` 
 ```
 
 ___
-Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
+&emsp;Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
 
 ___
-Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-JS-Nodejs/tree/main/codeApplication)...
+&emsp;Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-JS-Nodejs/tree/main/codeApplication)...
 
