@@ -8,18 +8,19 @@ const foo = () => {
   setTimeout(bar, 0)
   baz()
 }
-foo()
+foo()    // in turn => foo => baz => bar
 
+// sample 2
 (function () {
-  console.log('start');
+  console.log('start');          // => 1st
   setTimeout(function callback() {
-    console.log('message from callback');
+    console.log('message from callback');  // => 4th
   });
-  console.log('message');
+  console.log('message');        // => 2nd
   setTimeout(function callback_1() {
-    console.log('message from callback_1');
+    console.log('message from callback_1');  // => 5th
   }, 0);
-  console.log('finish');
+  console.log('finish');            // => 3rd
 })();
 
 
