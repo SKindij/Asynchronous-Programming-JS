@@ -2,8 +2,32 @@
 &emsp;JavaScript is single-threaded: only one task can run at a time :turkey:. 
 Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and so on). This can help us create some async, non-blocking behavior :eagle:. 
 
+&emsp;**Asynchronous programming** is an important concept, as it allows for code to run non-blocking and prevents the program from becoming unresponsive while waiting for a long-running operation to complete. In order to understand how asynchronous programming works, it's important to understand the concept of the **event loop**, as well as the call stack, microtasks, and macrotasks.
+
+## <a name="eventLoop"></a>📖 Event loop:
+&emsp;The **event loop** is the main mechanism used by JavaScript and Node.js to manage asynchronous operations. It's a continuously running process that checks the call stack for any pending function calls and queues up any asynchronous operations that are ready to run.
+
+
+
+&emsp;The **event loop** executes tasks in the following order:<br>
+1. **call stack** (_...function()_)
+2. **microtask** queue (_ ...process.nextTick callback _)
+3. **microtask** queue (_ ...Promise.then() callback, async function() _)
+4. **macrotask** queue (_ ...setTimeout(callback, 0) _)
+5. **macrotask** queue (_ ...setImmediate callback _)
+6. **macrotask** queue (_ ...setTimeout(callback, n), setInterval callback _)
+
 &emsp;When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
-___
+
+
+
+
+
+
+
+
+
+- - -
 
 ### Timing Events
 ```javascript
@@ -82,13 +106,7 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 
 ---
 
-#### The event loop executes tasks in the following order:<br>
-1. **call stack** (_...function()_)
-2. **microtask** queue (_ ...process.nextTick callback _)
-3. **microtask** queue (_ ...Promise.then() callback, async function() _)
-4. **macrotask** queue (_ ...setTimeout(callback, 0) _)
-5. **macrotask** queue (_ ...setImmediate callback _)
-6. **macrotask** queue (_ ...setTimeout(callback, n), setInterval callback _)
+
 
 ```javascript 
      const baz = () => console.log('baz');
