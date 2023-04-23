@@ -7,6 +7,13 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 ## <a name="eventLoop"></a>📖 Event loop:
 &emsp;The **event loop** is the main mechanism used by JavaScript and Node.js to manage asynchronous operations. It's a continuously running process that checks the call stack for any pending function calls and queues up any asynchronous operations that are ready to run.
 
+&emsp;The **call stack** (_part of the JS engine, this isn’t browser specific_) is a data structure that keeps track of the currently executing function calls.
+> _Whenever function is called, it's added to top of call stack :waffle:, and when function returns, it's removed from the top of stack.\
+> Meaning that it’s first in, last out._
+
+&emsp;When asynchronous operation is queued up, it's added to either microtask queue or macrotask queue, depending on type of operation. 
+> _Microtasks are higher priority than macrotasks, and will always be executed before any macrotasks that are currently queued up._
+
 
 
 &emsp;The **event loop** executes tasks in the following order:<br>
@@ -16,15 +23,6 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 4. **macrotask** queue (_ ...setTimeout(callback, 0) _)
 5. **macrotask** queue (_ ...setImmediate callback _)
 6. **macrotask** queue (_ ...setTimeout(callback, n), setInterval callback _)
-
-&emsp;When we invoke a function, it gets added to the **call stack** :waffle: (_part of the JS engine, this isn’t browser specific_) - meaning that it’s first in, last out. When a function returns a value, it gets popped off the stack.<br>
-
-
-
-
-
-
-
 
 
 - - -
