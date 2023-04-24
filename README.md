@@ -122,7 +122,7 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
      start();
 ```
 ___
-### ES6 introduced Promises.
+### <a name="promises"></a>📖 ES6 introduced Promises.
 
 &emsp;We can create a promise, using a Promise constructor that receives a callback.<br>
 > *A Promise is an object that contains a status and a value.* 
@@ -195,7 +195,7 @@ ___
 &emsp;We ``fetch`` some JSON data via an HTTP request. The **fetch function** returns a **promise**, which will either ``resolve`` or ``reject``. The **response body** has a json method for parsing the response from JSON to an object. ``.then`` returns a promise of its own, which handle by attaching another ``.then`` handler, and in case of **error** we attach a ``catch`` handler and log the error.
 
 ___
-### ES7 introduced Async/Await.
+### <a name="asyncAwait"></a>📖 ES7 introduced Async/Await.
 &emsp;With the async and await keywords, we can create async functions which implicitly return a promise.<br>
 
 &emsp;When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
