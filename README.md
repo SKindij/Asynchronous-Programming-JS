@@ -55,31 +55,33 @@ Common use cases in production setting:
 + of ``setTimeout(callback, 0)`` is to defer non-critical work to be executed after the current call stack has been cleared;
   > For example, imagine that you are running production line where you need to track speed of each machine in real-time.\
   > You might have function that calculates speed of each machine and updates dashboard to display results. However, if you run this function too frequently, it could slow down performance of your application and even cause machines to slow down.\
-  > By using ``setTimeout(callback, 0)``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected. 
-+ of ``setImmediate(callback)`` is to execute a function immediately after the current call stack has been cleared.. 
+  > By using ``setTimeout``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected. 
++ of ``setImmediate(callback)`` is to execute a function immediately after the current call stack has been cleared;
   > For example, imagine that you are running manufacturing line where you need to track production rate of each machine.\
   > You might have function that calculates production rate and updates database with results.\
-  > By using ``setImmediate(callback)``, you can ensure that calculation function is executed as soon as possible after the current call stack has been cleared, ensuring that production rate data is as up-to-date as possible.
+  > By using ``setImmediate``, you can ensure that calculation function is executed as soon as possible after the current call stack has been cleared, ensuring that production rate data is as up-to-date as possible.
++ of ``setTimeout(callback, delay)`` is to schedule a task to be executed at a specific time;
+  > For example, imagine that you are running manufacturing line that requires routine maintenance.\
+  > You might schedule maintenance task to be executed every 1000 hours of machine operation.\
+  > By using ``setTimeout``, you can schedule maintenance task to be executed after specified delay, ensuring that task is executed at appropriate time.
 
-#### There are two ways of running something regularly.
-
-&emsp; ``setInterval(callback, delay)`` is method that allows you to schedule macrotask to be executed repeatedly at specified interval. 
-> ```javascript   
->  // repeat with the interval of 2 seconds
->  let intervalId = setInterval(() => console.log('tick-tack'), 2000);
->  // after 7 seconds stop
->  setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
-> ```
-
-> The other way is a **nested setTimeout**, like this:
-> > ```javascript 
-> >  let timerId = setTimeout(function tickTack() {
-> >    console.log('tick-tack');
-> >    // setTimeout schedules next call right at the end of current one
-> >    timerId = setTimeout(tickTack, 2000); 
-> >  }, 2000);
-> >  setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
-> > ```
+#### There are two ways of running something regularly:
++ ``setInterval(callback, delay)`` is method that allows you to schedule macrotask to be executed repeatedly at specified interval. 
+  > ```javascript   
+  >  // repeat with the interval of 2 seconds
+  >  let intervalId = setInterval(() => console.log('tick-tack'), 2000);
+  >  // after 7 seconds stop
+  >  setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
+  > ```
++ The other way is a **nested setTimeout**, like this:
+  > ```javascript 
+  >  let timerId = setTimeout(function tickTack() {
+  >    console.log('tick-tack');
+  >    // setTimeout schedules next call right at the end of current one
+  >    timerId = setTimeout(tickTack, 2000); 
+  >  }, 2000);
+  >  setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
+  > ```
 
 
 
