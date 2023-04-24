@@ -41,55 +41,49 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 > >  console.log(`timer identifier: ${timerId}`); // => 1
 > > ```
 
-&emsp;One common use case of ``setTimeout(callback, 0)`` in production setting is to defer non-critical work to be executed after the current call stack has been cleared. 
-> For example, imagine that you are running production line where you need to track speed of each machine in real-time.\
-> You might have function that calculates speed of each machine and updates dashboard to display results. However, if you run this function too frequently, it could slow down performance of your application and even cause machines to slow down.\
-> By using ``setTimeout(callback, 0)``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected.
+&emsp;To execute some piece of code asynchronously you can use ``setImmediate(callback)`` provided **by Node.js**.\
+It is a method that allows you to schedule macrotask to be executed immediately after the current call stack has been cleared.
+> ```javascript 
+>  setImmediate(callback, arg1, arg2, ...)
+>  // callback is executed in the next iteration of event loop
+>  setImmediate( () => { console.log('run something'); } );
+> ```
+
+&emsp;``setTimeout(callback, 0)`` is very similar to ``setImmediate(callback)``.
+
+Common use cases in production setting:
++ of ``setTimeout(callback, 0)`` is to defer non-critical work to be executed after the current call stack has been cleared;
+  > For example, imagine that you are running production line where you need to track speed of each machine in real-time.\
+  > You might have function that calculates speed of each machine and updates dashboard to display results. However, if you run this function too frequently, it could slow down performance of your application and even cause machines to slow down.\
+  > By using ``setTimeout(callback, 0)``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected. 
++ of ``setImmediate(callback)`` is to execute a function immediately after the current call stack has been cleared.. 
+  > For example, imagine that you are running manufacturing line where you need to track production rate of each machine.\
+  > You might have function that calculates production rate and updates database with results.\
+  > By using ``setImmediate(callback)``, you can ensure that calculation function is executed as soon as possible after the current call stack has been cleared, ensuring that production rate data is as up-to-date as possible.
+
+#### There are two ways of running something regularly.
+
+&emsp; ``setInterval(callback, delay)`` is method that allows you to schedule macrotask to be executed repeatedly at specified interval. 
+> ```javascript   
+>  // repeat with the interval of 2 seconds
+>  let intervalId = setInterval(() => console.log('tick-tack'), 2000);
+>  // after 7 seconds stop
+>  setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
+> ```
+
+> The other way is a **nested setTimeout**, like this:
+> > ```javascript 
+> >  let timerId = setTimeout(function tickTack() {
+> >    console.log('tick-tack');
+> >    // setTimeout schedules next call right at the end of current one
+> >    timerId = setTimeout(tickTack, 2000); 
+> >  }, 2000);
+> >  setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
+> > ```
 
 
 
 
-
-#### There are two ways of running something regularly.<br>
-
-&emsp;**setInterval** starts a function after the interval of time, then repeating to run a function continuously at that interval.<br>
-```javascript      
-       // repeat with the interval of 2 seconds
-       let intervalId = setInterval(() => console.log('tick'), 2000);
-       // after 7 seconds stop
-       setTimeout(() => { clearInterval(intervalId); console.log('stop'); }, 7000);
-```
-
-&emsp;The other way is a **nested setTimeout**, like this:<br>
-```javascript 
-       let timerId = setTimeout(function tick() {
-         console.log('tick');
-         timerId = setTimeout(tick, 2000); // (setTimeout schedules the next call right at the end of the current one )
-       }, 2000);
-       setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
-```
-
-&emsp;We can use the **clearInterval()** method to achieve a certain number of reruns of the function.<br>
-```javascript 
-     let count = 0;
-     const intervalId = setInterval(() => {
-        console.log('some action repeated every second');
-        count++;
-        if (count === 7) {
-	   console.log('Clearing the interval id after 7 executions');
-	   clearInterval(intervalId); }
-     }, 1000);
-```
-
-- - -
-
-&emsp;To execute some piece of code asynchronously use the **setImmediate()** function provided **by Node.js**:<br>
-```javascript 
-        setImmediate( () => { console.log('run something'); } );
-```
-
-&emsp;Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.
-A ``setTimeout() callback`` with a 0ms delay is very similar to ``setImmediate()``. The execution order will depend on various factors.<br>
 
 
 - - -
