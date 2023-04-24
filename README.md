@@ -65,7 +65,7 @@ Common use cases in production setting:
   > You might schedule maintenance task to be executed every 1000 hours of machine operation.\
   > By using ``setTimeout``, you can schedule maintenance task to be executed after specified delay, ensuring that task is executed at appropriate time.
 
-#### There are two ways of running something regularly:
+There are two ways of running something regularly:
 + ``setInterval(callback, delay)`` is method that allows you to schedule macrotask to be executed repeatedly at specified interval. 
   > ```javascript   
   >  // repeat with the interval of 2 seconds
@@ -83,10 +83,40 @@ Common use cases in production setting:
   >  setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
   > ```
 
-
-
-
-
+> For example: we have a production line with 10 machines.\
+> Every 10 seconds, we want to calculate speed of each machine and update a dashboard with results.
+> > ```javascript
+> >  function calculateMachineSpeed(machineId) {
+> >    // perform some calculations to determine speed of machine
+> >    const speed = Math.random() * 100;   
+> >    // update the dashboard with the machine's speed
+> >    updateDashboard(machineId, speed);
+> >  };
+> >  
+> >  function updateDashboard(machineId, speed) {
+> >    // update the dashboard to display the machine's speed
+> >    console.log(`Machine ${machineId} speed: ${speed.toFixed(2)}`);
+> >  };
+> >  
+> >  function runProductionLine() {
+> >    // assume we have 10 machines on production line
+> >    const machineIds = Array.from({ length: 10 }, (_, i) => i + 1);  
+> >    const productionLineInterval = setInterval(() => {
+> >      machineIds.forEach(machineId => {
+> >        // calculate speed of each machine every 10 seconds
+> >        setTimeout(() => {calculateMachineSpeed(machineId);}, 0);
+> >      });
+> >    }, 10000);
+> >    // stop the execution of the program after 30 seconds
+> >    setTimeout(() => {
+> >      clearInterval(productionLineInterval);
+> >      console.log('Production line has been shut down.');
+> >    }, 30000);
+> >  }
+> >  
+> >  // start the production line
+> >  runProductionLine();
+> > ```
 
 - - -
 
