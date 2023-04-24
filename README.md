@@ -8,13 +8,14 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 &emsp;The **event loop** is the main mechanism used by JavaScript and Node.js to manage asynchronous operations. It's a continuously running process that checks the call stack for any pending function calls and queues up any asynchronous operations that are ready to run.
 
 &emsp;The **call stack** (_part of the JS engine, this isn’t browser specific_) is a data structure that keeps track of the currently executing function calls.
-> _Whenever function is called, it's added to top of call stack :waffle:, and when function returns, it's removed from the top of stack.\
+> _Whenever func is called, it's added to top of call stack :waffle:, and when func returns, it's removed from the top of stack.\
 > Meaning that it’s first in, last out._
 
 &emsp;When asynchronous operation is queued up, it's added to either microtask queue or macrotask queue, depending on type of operation. 
 > _Microtasks are higher priority than macrotasks, and will always be executed before any macrotasks that are currently queued up._
 
-
+&emsp;Once microtask queue is empty, the event loop will move on to the macrotask queue, and execute next available macrotask.
+> _This process will continue until all macrotasks in queue have been executed, or until new microtask is added to queue._
 
 &emsp;The **event loop** executes tasks in the following order:<br>
 1. **call stack** (_...function()_)
@@ -24,20 +25,12 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 5. **macrotask** queue (_ ...setImmediate callback _)
 6. **macrotask** queue (_ ...setTimeout(callback, n), setInterval callback _)
 
-
 - - -
 
-### Timing Events
-```javascript
-     const foo = () => console.log("First: foo");                                 // № 1
-     const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
-     const fer = () => setTimeout(() => console.log("Third: fer"), 1500);         // № 4
-     const baz = () => console.log("Fourth: baz");                                // № 2
-     const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);            // № 3
-	    foo();     bar();    fer();   baz();    dif();      
-```
+### Timing Events (macrotasks)
 
-The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the 2-nd argument we passed to it.
+
+&emsp;The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the 2-nd argument we passed to it.
 The ***callback*** doesn’t immediately get added to the **call stack**, instead it’s passed to the **queue**.
  If the **call stack** is empty (_all previously invoked functions have returned their values and have been popped off the stack_), the first item in the **queue** gets added to the **call stack**.<br>
 ```javascript
@@ -84,7 +77,7 @@ The ***callback*** doesn’t immediately get added to the **call stack**, instea
      }, 1000);
 ```
 
----
+- - -
 
 &emsp;To execute some piece of code asynchronously use the **setImmediate()** function provided **by Node.js**:<br>
 ```javascript 
@@ -94,6 +87,14 @@ The ***callback*** doesn’t immediately get added to the **call stack**, instea
 &emsp;Any function passed as the setImmediate() argument is a callback that's executed in the next iteration of the **event loop**.
 A ``setTimeout() callback`` with a 0ms delay is very similar to ``setImmediate()``. The execution order will depend on various factors.<br>
 
+
+- - -
+
+### microtasks
+
+#### process.nextTick 
+&emsp;This method is used to schedule a function to be executed at the next turn of the event loop. It's often used to ensure that a callback function is executed after the current function completes, but before any other I/O events are processed.
+
 &emsp;A function passed to **process.nextTick()** is going to be executed on the current iteration of the **event loop**, after the current operation ends. This means it will always execute before setTimeout and setImmediate.<br>
 ```javascript 
       process.nextTick( () => { console.log('do something'); } );
@@ -102,7 +103,22 @@ A ``setTimeout() callback`` with a 0ms delay is very similar to ``setImmediate()
 &emsp;It is the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.
 Use nextTick() when you want to make sure that in the next event loop iteration that code is already executed.<br>
 
----
+
+
+
+
+
+
+```javascript
+     const foo = () => console.log("First: foo");                                 // № 1
+     const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
+     const fer = () => setTimeout(() => console.log("Third: fer"), 1500);         // № 4
+     const baz = () => console.log("Fourth: baz");                                // № 2
+     const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);            // № 3
+	    foo();     bar();    fer();   baz();    dif();      
+```
+
+
 
 
 
