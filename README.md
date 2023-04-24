@@ -8,8 +8,7 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 &emsp;The **event loop** is the main mechanism used by JavaScript and Node.js to manage asynchronous operations. It's a continuously running process that checks the call stack for any pending function calls and queues up any asynchronous operations that are ready to run.
 
 &emsp;The **call stack** (_part of the JS engine, this isn’t browser specific_) is a data structure that keeps track of the currently executing function calls.
-> _Whenever func is called, it's added to top of call stack :waffle:, and when func returns, it's removed from the top of stack.\
-> Meaning that it’s first in, last out._
+> _Whenever func is called, it's added to top of call stack :waffle:, and when func returns, it's removed from the top of stack. Meaning that it’s first in, last out._
 
 &emsp;When asynchronous operation is queued up, it's added to either microtask queue or macrotask queue, depending on type of operation. 
 > _Microtasks are higher priority than macrotasks, and will always be executed before any macrotasks that are currently queued up._
@@ -18,8 +17,8 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 > _This process will continue until all macrotasks in queue have been executed, or until new microtask is added to queue._
 
 &emsp;The **event loop** executes tasks in the following order:<br>
-1. **call stack** (_...function()_)
-2. **microtask** queue (_ ...process.nextTick callback _)
+1. **call stack** (_...any function that's called synchronously_)
+2. **microtask** queue (_ ...process.nextTick callback, queueMicrotask() _)
 3. **microtask** queue (_ ...Promise.then() callback, async function() _)
 4. **macrotask** queue (_ ...setTimeout(callback, 0) _)
 5. **macrotask** queue (_ ...setImmediate callback _)
@@ -28,23 +27,28 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 - - -
 
 ### Timing Events (macrotasks)
+&emsp;_Macrotasks are type of asynchronous task in JS that are scheduled to run after the current call stack has been cleared._
+
+&emsp;The ``setTimeout()`` lets us delay tasks without blocking main thread. In **Web API** timer runs for as long as 2-nd argument we passed to it.
+> **callback** doesn’t immediately get added to **call stack**, instead it’s passed to **queue**. If **call stack** is empty (_all previously invoked functions have returned their values and have been popped off stack_), first item in **queue** gets added to **call stack**.
+> > ```javascript
+> >  // remaining parameters arg1, arg2, ... are optional and will be passed as arguments to callback
+> >  setTimeout(callback, [delay], [arg1], [arg2], ...);
+> >  // call to setTimeout returns timer identifier that we can use to cancel execution
+> >  let timerId = setTimeout(() => console.log("never happens"), 1000);
+> >  console.log(`timer identifier: ${timerId}`); // => 1
+> >  clearTimeout(timerId);
+> >  console.log(`timer identifier: ${timerId}`); // => 1
+> > ```
+
+&emsp;One common use case of ``setTimeout(callback, 0)`` in production setting is to defer non-critical work to be executed after the current call stack has been cleared. 
+> For example, imagine that you are running production line where you need to track speed of each machine in real-time.\
+> You might have function that calculates speed of each machine and updates dashboard to display results. However, if you run this function too frequently, it could slow down performance of your application and even cause machines to slow down.\
+> By using ``setTimeout(callback, 0)``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected.
 
 
-&emsp;The **setTimeout** lets us delay tasks without blocking the main thread. In the **Web API**, a timer runs for as long as the 2-nd argument we passed to it.
-The ***callback*** doesn’t immediately get added to the **call stack**, instead it’s passed to the **queue**.
- If the **call stack** is empty (_all previously invoked functions have returned their values and have been popped off the stack_), the first item in the **queue** gets added to the **call stack**.<br>
-```javascript
-     let timerId = setTimeout(func, [delay], [arg1], [arg2], ...);
-       clearTimeout(timerId);
-```
 
-&emsp;A call to **setTimeout** returns a “timer identifier” ***timerId*** that we can use to cancel the execution.<br>
-```javascript
-     let timerId = setTimeout(() => console.log("never happens"), 1000);
-       console.log(timerId); // timer identifier
-     clearTimeout(timerId);
-       console.log(timerId); // same identifier
-```
+
 
 #### There are two ways of running something regularly.<br>
 
