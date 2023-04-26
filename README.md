@@ -93,8 +93,7 @@ There are two ways of running something regularly:
 > >    foo();     bar();    fer();   baz();    dif();      
 > > ```
 
-> advanced example
-> We have a production line with 10 machines.\
+> advanced example: We have a production line with 10 machines.\
 > Every 10 seconds, we want to calculate speed of each machine and update a dashboard with results.
 > > ```javascript
 > >  function calculateMachineSpeed(machineId) {
@@ -132,45 +131,40 @@ There are two ways of running something regularly:
 - - -
 
 ### microtasks
+&emsp;They are a type of task that are executed after the current task finishes, but before the browser or JS-engine renders any changes to the screen. Examples of microtasks include Promise callbacks and process.nextTick callbacks.\
+&emsp;Microtasks are placed in a queue and executed one after the other in a FIFO (First-In-First-Out) manner. This means that if there are multiple microtasks in the queue, they will be executed in the order they were added to the queue.
 
-#### process.nextTick 
-&emsp;This method is used to schedule a function to be executed at the next turn of the event loop. It's often used to ensure that a callback function is executed after the current function completes, but before any other I/O events are processed.
-
-&emsp;A function passed to **process.nextTick()** is going to be executed on the current iteration of the **event loop**, after the current operation ends. This means it will always execute before setTimeout and setImmediate.<br>
-```javascript 
-      process.nextTick( () => { console.log('do something'); } );
-```
-
-&emsp;It is the way the **JS** engine process a function **asynchronously** (after the current function), but as soon as possible, not queue it.
-Use nextTick() when you want to make sure that in the next event loop iteration that code is already executed.<br>
-
-
-
-
+#### process.nextTick() 
+&emsp;It is Node.js-specific function that adds callback to microtask queue. -It is similar to setImmediate, which adds a callback to the macrotask queue._
+This method is used to schedule function to be executed at the next turn of the event loop. 
+> _It's often used to ensure that callback function is executed after current function completes, but before any other I/O events are processed._\
+> _It will always execute before setTimeout and setImmediate._
+> > ```javascript 
+> >  process.nextTick( () => { console.log('do something'); } );
+> > ```
+> It is way **JS** engine process function **asynchronously** (after current function), but as soon as possible, not queue it.\
+> Use ``nextTick()`` when you want to make sure that in next event loop iteration that code is already executed.
 
 
 
 
 
-
-
-
-
-```javascript 
-     const baz = () => console.log('baz');
-     const foo = () => console.log('foo');
-     const zoo = () => console.log('zoo');
-     const start = () => {
-       console.log('start');                                // № 1
-       setImmediate(baz);                                   // № 5
-       new Promise((resolve, reject) => { resolve('bar');
-         }).then((resolve) => {
-           console.log(resolve);                            // № 3
-           process.nextTick(zoo); });                       // № 4
-       process.nextTick(foo);                               // № 2
-     };
-     start();
-```
+> simple example
+> > ```javascript 
+> >     const baz = () => console.log('baz');
+> >     const foo = () => console.log('foo');
+> >     const zoo = () => console.log('zoo');
+> >     const start = () => {
+> >       console.log('start');                                // № 1
+> >       setImmediate(baz);                                   // № 5
+> >       new Promise((resolve, reject) => { resolve('bar');
+> >         }).then((resolve) => {
+> >           console.log(resolve);                            // № 3
+> >           process.nextTick(zoo); });                       // № 4
+> >       process.nextTick(foo);                               // № 2
+> >     };
+> >     start();
+> > ```
 ___
 ### <a name="promises"></a>📖 ES6 introduced Promises.
 
