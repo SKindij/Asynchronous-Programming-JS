@@ -22,11 +22,3 @@ foo()    // in turn => foo => baz => bar
   }, 0);
   console.log('finish');            // => 3rd
 })();
-
-
-
-
-
-
-
-
