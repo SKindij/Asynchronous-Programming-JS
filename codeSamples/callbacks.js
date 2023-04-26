@@ -42,6 +42,3 @@ const callback = callbackCounter(4, () => { console.log('All done!'); });
   readFile('README.md', callback);  
 console.log('end');
 
-
-
-
