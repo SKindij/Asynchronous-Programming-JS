@@ -8,13 +8,13 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 &emsp;The **event loop** is the main mechanism used by JavaScript and Node.js to manage asynchronous operations. It's a continuously running process that checks the call stack for any pending function calls and queues up any asynchronous operations that are ready to run.
 
 &emsp;The **call stack** (_part of the JS engine, this isn’t browser specific_) is a data structure that keeps track of the currently executing function calls.
-> _Whenever func is called, it's added to top of call stack :waffle:, and when func returns, it's removed from the top of stack. Meaning that it’s first in, last out._
+> &emsp;_Whenever func is called, it's added to top of call stack :waffle:, and when func returns, it's removed from the top of stack. Meaning that it’s first in, last out._
 
 &emsp;When asynchronous operation is queued up, it's added to either microtask queue or macrotask queue, depending on type of operation. 
-> _Microtasks are higher priority than macrotasks, and will always be executed before any macrotasks that are currently queued up._
+> &emsp;_Microtasks are higher priority than macrotasks, and will always be executed before any macrotasks that are currently queued up._
 
 &emsp;Once microtask queue is empty, the event loop will move on to the macrotask queue, and execute next available macrotask.
-> _This process will continue until all macrotasks in queue have been executed, or until new microtask is added to queue._
+> &emsp;_This process will continue until all macrotasks in queue have been executed, or until new microtask is added to queue._
 
 &emsp;The **event loop** executes tasks in the following order:<br>
 1. **call stack** (_...any function that's called synchronously_)
@@ -30,7 +30,7 @@ Browser gives us a **Web API** :lollipop: (DOM, setTimeout, HTTP requests, and s
 &emsp;_Macrotasks are type of asynchronous task in JS that are scheduled to run after the current call stack has been cleared._
 
 &emsp;The ``setTimeout()`` lets us delay tasks without blocking main thread. In **Web API** timer runs for as long as 2-nd argument we passed to it.
-> **callback** doesn’t immediately get added to **call stack**, instead it’s passed to **queue**. If **call stack** is empty (_all previously invoked functions have returned their values and have been popped off stack_), first item in **queue** gets added to **call stack**.
+> &emsp;**callback** doesn’t immediately get added to **call stack**, instead it’s passed to **queue**. If **call stack** is empty (_all previously invoked functions have returned their values and have been popped off stack_), first item in **queue** gets added to **call stack**.
 > > ```javascript
 > >  // remaining parameters arg1, arg2, ... are optional and will be passed as arguments to callback
 > >  setTimeout(callback, [delay], [arg1], [arg2], ...);
@@ -53,17 +53,17 @@ It is a method that allows you to schedule macrotask to be executed immediately 
 
 Common use cases in production setting:
 + of ``setTimeout(callback, 0)`` is to defer non-critical work to be executed after the current call stack has been cleared;
-  > For example, imagine that you are running production line where you need to track speed of each machine in real-time.\
-  > You might have function that calculates speed of each machine and updates dashboard to display results. However, if you run this function too frequently, it could slow down performance of your application and even cause machines to slow down.\
-  > By using ``setTimeout``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected. 
+  > &emsp;For example, imagine that you are running production line where you need to track speed of each machine in real-time.\
+  > &emsp;You might have function that calculates speed of each machine and updates dashboard to display results. However, if you run this function too frequently, it could slow down performance of your application and even cause machines to slow down.\
+  > &emsp;By using ``setTimeout``, you can defer execution of speed calculation function until after current call stack has been cleared, ensuring that performance of application is not negatively affected. 
 + of ``setImmediate(callback)`` is to execute a function immediately after the current call stack has been cleared;
-  > For example, imagine that you are running manufacturing line where you need to track production rate of each machine.\
-  > You might have function that calculates production rate and updates database with results.\
-  > By using ``setImmediate``, you can ensure that calculation function is executed as soon as possible after the current call stack has been cleared, ensuring that production rate data is as up-to-date as possible.
+  > &emsp;For example, imagine that you are running manufacturing line where you need to track production rate of each machine.\
+  > &emsp;You might have function that calculates production rate and updates database with results.\
+  > &emsp;By using ``setImmediate``, you can ensure that calculation function is executed as soon as possible after the current call stack has been cleared, ensuring that production rate data is as up-to-date as possible.
 + of ``setTimeout(callback, delay)`` is to schedule a task to be executed at a specific time;
-  > For example, imagine that you are running manufacturing line that requires routine maintenance.\
-  > You might schedule maintenance task to be executed every 1000 hours of machine operation.\
-  > By using ``setTimeout``, you can schedule maintenance task to be executed after specified delay, ensuring that task is executed at appropriate time.
+  > &emsp;For example, imagine that you are running manufacturing line that requires routine maintenance.\
+  > &emsp;You might schedule maintenance task to be executed every 1000 hours of machine operation.\
+  > &emsp;By using ``setTimeout``, you can schedule maintenance task to be executed after specified delay, ensuring that task is executed at appropriate time.
 
 There are two ways of running something regularly:
 + ``setInterval(callback, delay)`` is method that allows you to schedule macrotask to be executed repeatedly at specified interval. 
@@ -83,7 +83,7 @@ There are two ways of running something regularly:
   >  setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
   > ```
 
-> simple example
+> &emsp;simple example
 > > ```javascript
 > >  const foo = () => console.log("First: foo");                                 // № 1
 > >  const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
@@ -93,7 +93,7 @@ There are two ways of running something regularly:
 > >    foo();     bar();    fer();   baz();    dif();      
 > > ```
 
-> advanced example: We have a production line with 10 machines.\
+> &emsp;advanced example: We have a production line with 10 machines.\
 > Every 10 seconds, we want to calculate speed of each machine and update a dashboard with results.
 > > ```javascript
 > >  function calculateMachineSpeed(machineId) {
@@ -137,39 +137,49 @@ There are two ways of running something regularly:
 #### process.nextTick() 
 &emsp;It is Node.js-specific function that adds callback to microtask queue. -It is similar to setImmediate, which adds a callback to the macrotask queue._
 This method is used to schedule function to be executed at the next turn of the event loop. 
-> _It's often used to ensure that callback function is executed after current function completes, but before any other I/O events are processed._\
-> _It will always execute before setTimeout and setImmediate._
-> > ```javascript 
-> >  process.nextTick( () => { console.log('do something'); } );
+> &emsp;_It's often used to ensure that callback function is executed after current function completes, but before any other I/O events are processed._\
+> &emsp;_It will always execute before setTimeout and setImmediate._
+> > ```javascript
+> >  console.log('Start'); // => 1
+> >  process.nextTick( () => console.log('process.nextTick') ); // => 3
+> >  setTimeout( () => console.log('setTimeout'), 0 ); // => 5
+> >  process.nextTick( () => console.log('do something') ); // => 4
+> >  console.log('End'); // => 2
 > > ```
-> It is way **JS** engine process function **asynchronously** (after current function), but as soon as possible, not queue it.\
-> Use ``nextTick()`` when you want to make sure that in next event loop iteration that code is already executed.
 
+&emsp;It is way **JS** engine process function **asynchronously** (after current function), but as soon as possible, not queue it.\
+Use ``nextTick()`` when you want to make sure that in next event loop iteration that code is already executed.
 
-
-
-
-> simple example
-> > ```javascript 
-> >     const baz = () => console.log('baz');
-> >     const foo = () => console.log('foo');
-> >     const zoo = () => console.log('zoo');
-> >     const start = () => {
-> >       console.log('start');                                // № 1
-> >       setImmediate(baz);                                   // № 5
-> >       new Promise((resolve, reject) => { resolve('bar');
-> >         }).then((resolve) => {
-> >           console.log(resolve);                            // № 3
-> >           process.nextTick(zoo); });                       // № 4
-> >       process.nextTick(foo);                               // № 2
-> >     };
-> >     start();
+> &emsp;_Suppose you are developing system to monitor and control large manufacturing plant. The system receives large number of sensor readings from various machines and devices throughout the plant. You want to process these sensor readings as quickly as possible, but you don't want to block event loop while doing so._\
+> &emsp;_One solution to this problem is to use process.nextTick to schedule the processing of each sensor reading as a separate microtask._
+> > ```javascript
+> >  function processSensorData(sensorData) {
+> >    // split sensor data into smaller chunks
+> >    const chunks = splitSensorDataIntoChunks(sensorData);
+> >    // process each chunk asynchronously
+> >    let index = 0;
+> >    function processNextChunk() {
+> >      if (index < chunks.length) {
+> >        processChunk(chunks[index++]);
+> >        process.nextTick(processNextChunk);
+> >      }
+> >    }
+> >    processNextChunk();
+> >  }
+> >  
+> >  function processChunk(chunk) {
+> >    // process the chunk of sensor data
+> >    // ...
+> >  }
 > > ```
-___
+
+&emsp;This technique can be used in variety of scenarios where large number of tasks need to be processed without blocking the event loop. For example, it could be used in financial trading system to process a large number of trades or in logistics system to process a large number of shipping requests.
+
+
 ### <a name="promises"></a>📖 ES6 introduced Promises.
 
 &emsp;We can create a promise, using a Promise constructor that receives a callback.<br>
-> *A Promise is an object that contains a status and a value.* 
+> &emsp;*A Promise is an object that contains a status and a value.* 
 ```javascript
                  new Promise ( () => { console.log('something') } );
 ```
@@ -238,7 +248,26 @@ ___
 
 &emsp;We ``fetch`` some JSON data via an HTTP request. The **fetch function** returns a **promise**, which will either ``resolve`` or ``reject``. The **response body** has a json method for parsing the response from JSON to an object. ``.then`` returns a promise of its own, which handle by attaching another ``.then`` handler, and in case of **error** we attach a ``catch`` handler and log the error.
 
-___
+
+> &emsp;simple example
+> > ```javascript 
+> >     const baz = () => console.log('baz');
+> >     const foo = () => console.log('foo');
+> >     const zoo = () => console.log('zoo');
+> >     const start = () => {
+> >       console.log('start');                                // № 1
+> >       setImmediate(baz);                                   // № 5
+> >       new Promise((resolve, reject) => { resolve('bar');
+> >         }).then((resolve) => {
+> >           console.log(resolve);                            // № 3
+> >           process.nextTick(zoo); });                       // № 4
+> >       process.nextTick(foo);                               // № 2
+> >     };
+> >     start();
+> > ```
+
+- - -
+
 ### <a name="asyncAwait"></a>📖 ES7 introduced Async/Await.
 &emsp;With the async and await keywords, we can create async functions which implicitly return a promise.<br>
 
