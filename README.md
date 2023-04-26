@@ -83,7 +83,18 @@ There are two ways of running something regularly:
   >  setTimeout(() => { clearTimeout (timerId); console.log('stop'); }, 7000);
   > ```
 
-> For example: we have a production line with 10 machines.\
+> simple example
+> > ```javascript
+> >  const foo = () => console.log("First: foo");                                 // № 1
+> >  const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
+> >  const fer = () => setTimeout(() => console.log("Third: fer"), 1500);         // № 4
+> >  const baz = () => console.log("Fourth: baz");                                // № 2
+> >  const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);            // № 3
+> >    foo();     bar();    fer();   baz();    dif();      
+> > ```
+
+> advanced example
+> We have a production line with 10 machines.\
 > Every 10 seconds, we want to calculate speed of each machine and update a dashboard with results.
 > > ```javascript
 > >  function calculateMachineSpeed(machineId) {
@@ -139,14 +150,7 @@ Use nextTick() when you want to make sure that in the next event loop iteration 
 
 
 
-```javascript
-     const foo = () => console.log("First: foo");                                 // № 1
-     const bar = () => setTimeout(() => console.log("Second: bar"), 2500);        // № 5
-     const fer = () => setTimeout(() => console.log("Third: fer"), 1500);         // № 4
-     const baz = () => console.log("Fourth: baz");                                // № 2
-     const dif = () => setTimeout(() => console.log("Fifth: dif"), 0);            // № 3
-	    foo();     bar();    fer();   baz();    dif();      
-```
+
 
 
 
