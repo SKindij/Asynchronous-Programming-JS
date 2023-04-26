@@ -178,7 +178,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 
 ### <a name="promises"></a>📖 ES6 introduced Promises
 
-&emsp;We can create promise, using Promise constructor that receives a callback.
+&emsp;We can create promise, using Promise constructor that receives callback.
 > &emsp;*A Promise is an object that contains a status and a value.* 
 > > ```javascript
 > >   new Promise ( () => { console.log('something') } );
@@ -187,7 +187,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 >              [[PromiseState]]: "pending"
 >              [[PromiseResult]]: undefined
  
-&emsp; &emsp; &emsp; &emsp; ![promise-executing](https://github.com/SKindij/Asynchronous-JS-Nodejs/blob/main/codeApplication/promise-executor.jpg "promise-executing") 
+&emsp; &emsp; &emsp; ![promise-executing](https://github.com/SKindij/Asynchronous-Programming-Node.js/blob/main/codeSamples/promise-executor.jpg) 
 
 > > ```javascript 
 > >   new Promise ( (resolve, reject) => resolve('oh yea, was res') );
@@ -210,8 +210,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 | rejected ❌  | the operation was completed but there was an error              | .catch()   |
 | settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
 
-&emsp;Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
-
+&emsp;Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to server and awaiting response of an API call, or just asking user to choose file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
 > ```javascript 
 >      fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
 >	   } ).catch( (error) => {  console.log('this will get called when the promise is rejected');
@@ -219,35 +218,34 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 > ```
 
 &emsp;To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with a fatal exception.<br>
+> ```javascript 
+>	const fs = require('fs');
+>	const myPromise = new Promise( (resolve, reject) => {
+>	  fs.readFile( 'example.json', (err, data) => {
+>	    if (err) { reject(err);
+>	    } else { resolve(data); }  } );
+>	} );
+>	myPromise.then( data => console.log(JSON.parse(data)) ).catch( err => console.log(err) );
+>	console.log('keep runing code');
+> ```
 
-```javascript 
-	const fs = require('fs');
-	const myPromise = new Promise( (resolve, reject) => {
-	  fs.readFile( 'example.json', (err, data) => {
-	    if (err) { reject(err);
-	    } else { resolve(data); }  } );
-	} );
-	myPromise.then( data => console.log(JSON.parse(data)) ).catch( err => console.log(err) );
-	console.log('keep runing code');
-```
+&emsp;``.then()`` callback is not really the end. That's because when you return value of promise you get another promise. This becomes very useful when you want to run series of asynchronous operations in order. All you have to do is to return value of promise.
+> ```javascript 
+>     Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
+> ```
 
-&emsp;The ``.then()`` callback is not really the end. That's because when you return value of a promise you get another promise. This becomes very useful when you want to run a series of asynchronous operations in order. All you have to do is to return the value of the promise.
-
-```javascript 
-       Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
-```
-
-&emsp;Let's have a look at an example for fetching the json placeholder API to get some todos.
-
-```javascript 
-	fetch('https://jsonplaceholder.typicode.com/todos')
-	  .then(response => response.json())
-	  .then(json => console.log(json))
-	  .catch(err => console.log(err));
-```
-
-&emsp;We ``fetch`` some JSON data via an HTTP request. The **fetch function** returns a **promise**, which will either ``resolve`` or ``reject``. The **response body** has a json method for parsing the response from JSON to an object. ``.then`` returns a promise of its own, which handle by attaching another ``.then`` handler, and in case of **error** we attach a ``catch`` handler and log the error.
-
+&emsp;Let's have a look at an example for fetching json placeholder API to get some todos.
+> ```javascript 
+>  // We fetch some JSON data via an HTTP request:
+>	fetch('https://jsonplaceholder.typicode.com/todos')
+>  // function returns promise, which will either resolve or reject
+>  // response body has json method for parsing response from JSON to object
+>	  .then(response => response.json())
+>  // .then returns promise of its own, which handle by attaching another .then handler
+>	  .then(json => console.log(json))
+>  // in case of error we attach catch handler and log error
+>	  .catch(err => console.log(err));
+> ```
 
 > &emsp;simple example
 > > ```javascript 
@@ -265,6 +263,32 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 > >     };
 > >     start();
 > > ```
+
+> &emsp;Here's example of how Promise.then can be used in business or production context:
+> &emsp;_Suppose you are building an e-commerce platform that integrates with various payment gateways.\
+> When a customer places an order, you need to send the payment information to the payment gateway and wait for a response before proceeding with the order._
+> > ```javascript
+> >  function processOrder(order) {
+> >    // send payment information to payment gateway
+> >    sendPaymentInformation(order.paymentInfo)
+> >      .then((response) => { // handlee payment gateway response
+> >        if (response.success) { // payment was successful, process the order
+> >          return processOrderItems(order.items);
+> >        } else { // payment failed, handle error
+> >          throw new Error(response.error);
+> >        }
+> >      })
+> >      .then((result) => { // order processing was successful, send confirmation to customer
+> >        return sendOrderConfirmation(order.email);
+> >      })
+> >      .catch((error) => { // handle any errors that occurred during payment processing or order processing
+> >        console.error(error);
+> >        return sendOrderErrorNotification(order.email, error.message);
+> >      });
+> >  }
+> > ```
+
+&emsp;This technique can be used in a variety of scenarios where asynchronous processing is required, such as handling API requests, processing data, or interacting with external systems.
 
 - - -
 
