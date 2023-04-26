@@ -176,32 +176,32 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 &emsp;This technique can be used in variety of scenarios where large number of tasks need to be processed without blocking the event loop. For example, it could be used in financial trading system to process a large number of trades or in logistics system to process a large number of shipping requests.
 
 
-### <a name="promises"></a>📖 ES6 introduced Promises.
+### <a name="promises"></a>📖 ES6 introduced Promises
 
-&emsp;We can create a promise, using a Promise constructor that receives a callback.<br>
+&emsp;We can create promise, using Promise constructor that receives a callback.
 > &emsp;*A Promise is an object that contains a status and a value.* 
-```javascript
-                 new Promise ( () => { console.log('something') } );
-```
->              [[Prototype]]: Promise
->                 [[PromiseState]]: "pending"
->                 [[PromiseResult]]: undefined
+> > ```javascript
+> >   new Promise ( () => { console.log('something') } );
+> > ```
+>          [[Prototype]]: Promise
+>              [[PromiseState]]: "pending"
+>              [[PromiseResult]]: undefined
  
 &emsp; &emsp; &emsp; &emsp; ![promise-executing](https://github.com/SKindij/Asynchronous-JS-Nodejs/blob/main/codeApplication/promise-executor.jpg "promise-executing") 
 
-```javascript 
-                 new Promise ( (resolve, reject) => resolve('oh yea, was res') );
-```
->              [[Prototype]]: Promise
->                 [[PromiseState]]: "fulfilled"
->                 [[PromiseResult]]: "oh yea, was res"
+> > ```javascript 
+> >   new Promise ( (resolve, reject) => resolve('oh yea, was res') );
+> > ```
+>           [[Prototype]]: Promise
+>               [[PromiseState]]: "fulfilled"
+>               [[PromiseResult]]: "oh yea, was res"
 
-```javascript 
-                 new Promise ( (resolve, reject) => reject('oh no, was rej') );
-```
->              [[Prototype]]: Promise
->                 [[PromiseState]]: "rejected"
->                 [[PromiseResult]]: "oh no, was rej"
+> > ```javascript 
+> >       new Promise ( (resolve, reject) => reject('oh no, was rej') );
+> > ```
+>           [[Prototype]]: Promise
+>               [[PromiseState]]: "rejected"
+>               [[PromiseResult]]: "oh no, was rej"
 
 | STATE         | DESCRIPTION                                                     | CALLBCAK   |
 |:------------:|:---------------------------------------------------------------:|:----------:|
@@ -212,11 +212,11 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 
 &emsp;Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to the server and awaiting the response of an API call, or just asking the user to choose a file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
 
-```javascript 
-        fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
-		     } ).catch( (error) => {  console.log('this will get called when the promise is rejected');
-		     } ).finally( () => {  console.log('this will get called all the time');  } );
-```
+> ```javascript 
+>      fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
+>	   } ).catch( (error) => {  console.log('this will get called when the promise is rejected');
+>	   } ).finally( () => {  console.log('this will get called all the time');  } );
+> ```
 
 &emsp;To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with a fatal exception.<br>
 
@@ -268,7 +268,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 
 - - -
 
-### <a name="asyncAwait"></a>📖 ES7 introduced Async/Await.
+### <a name="asyncAwait"></a>📖 ES7 introduced Async/Await
 &emsp;With the async and await keywords, we can create async functions which implicitly return a promise.<br>
 
 &emsp;When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
