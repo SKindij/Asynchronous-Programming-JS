@@ -27,4 +27,3 @@ const delay = (msec) => new Promise((resolve) => {
 // we run the version with .then()
 console.log('Start delay: ' + new Date().toISOString());
 delay(5000).then(() => { console.log('End of waiting: ' + new Date().toISOString()); });
-
