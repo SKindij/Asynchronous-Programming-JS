@@ -177,9 +177,18 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 
 
 ### <a name="promises"></a>📖 ES6 introduced Promises
+&emsp;Instead of executing function and waiting for it to finish before moving on to next one, **promises** allow you to execute function and move on to next one while first function is still running. **Promise** will then return result of function when it is done.
 
-&emsp;We can create promise, using Promise constructor that receives callback.
-> &emsp;*A Promise is an object that contains a status and a value.* 
+&emsp;We can create promise, using Promise constructor (_takes single argument, which is function with two parameters: resolve and reject_) that receives callback.
+> ```javascript
+>  const promise = new Promise((resolve, reject) => {
+>    // do some asynchronous operation
+>      // when operation is done, call resolve function with result
+>      // if there is an error, call reject function with error
+>  });
+> ```
+
+> &emsp;*Promise is an object that contains status and value.* 
 > > ```javascript
 > >   new Promise ( () => { console.log('something') } );
 > > ```
@@ -203,21 +212,22 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 >               [[PromiseState]]: "rejected"
 >               [[PromiseResult]]: "oh no, was rej"
 
-| STATE         | DESCRIPTION                                                     | CALLBCAK   |
-|:------------:|:---------------------------------------------------------------:|:----------:|
-| pending ⏳    | means the operation is still running and the promise is pending |            |
-| fulfilled ✅ | the operation was completed and it was successful               | .then()    |
-| rejected ❌  | the operation was completed but there was an error              | .catch()   |
-| settled 🥳   | resolved or rejected, either way this callback gets called      | .finally() |
+| STATE         | DESCRIPTION                                                  | CALLBCAK   |
+|:------------:|:-------------------------------------------------------------:|:----------:|
+| pending ⏳    | means the operation is still running and promise is pending  |            |
+| fulfilled ✅ | the operation was completed and it was successful            | .then()    |
+| rejected ❌  | the operation was completed but there was an error           | .catch()   |
+| settled 🥳   | resolved or rejected, either way this callback gets called   | .finally() |
 
-&emsp;Typically **promise** is used to manage situations where you must wait for the outcome of an operation. *For example, uploading files to server and awaiting response of an API call, or just asking user to choose file from their computer.* A **promise** is simply a function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
+&emsp;Typically **promise** is used to manage situations where you must wait for outcome of operation. *For example, uploading files to server and awaiting response of  API call, or just asking user to choose file from their computer.* **Promise** is simply function that returns an Object which you can attach callbacks to. These callbacks will have to wait until the operation is ``fulfilled`` or ``rejected``, and will only get called when the operation has completed.
 > ```javascript 
->      fetch( `some_api_url` ).then( (response) => {  console.log('this will get called when the promise fulfills'); 
->	   } ).catch( (error) => {  console.log('this will get called when the promise is rejected');
->	   } ).finally( () => {  console.log('this will get called all the time');  } );
+>    fetch( `some_api_url` )
+>        .then( (response) => { console.log('this will get called when promise fulfills'); })
+>	 .catch( (error) => { console.log('this will get called when promise is rejected'); })
+>	 .finally( () => { console.log('this will get called all time');  } );
 > ```
 
-&emsp;To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with a fatal exception.<br>
+&emsp;To handle errors with ``catch`` is best practice. Unhandled Promise rejections will crash your application with fatal exception.<br>
 > ```javascript 
 >	const fs = require('fs');
 >	const myPromise = new Promise( (resolve, reject) => {
@@ -234,7 +244,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 >     Promise.resolve(1981).then(res => 2023 - res).then(res => 50 - res).then(res => 2023 + res).then(res => console.log(res) );
 > ```
 
-&emsp;Let's have a look at an example for fetching json placeholder API to get some todos.
+&emsp;Let's have a look at example for fetching json placeholder API to get some todos.
 > ```javascript 
 >  // We fetch some JSON data via an HTTP request:
 >	fetch('https://jsonplaceholder.typicode.com/todos')
@@ -247,7 +257,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 >	  .catch(err => console.log(err));
 > ```
 
-> &emsp;simple example
+> &emsp;simple example of event-loop
 > > ```javascript 
 > >     const baz = () => console.log('baz');
 > >     const foo = () => console.log('foo');
@@ -289,6 +299,13 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 > > ```
 
 &emsp;This technique can be used in a variety of scenarios where asynchronous processing is required, such as handling API requests, processing data, or interacting with external systems.
+
+&emsp;**Promise.all()** method allows you to execute multiple promises in parallel and wait for all of them to resolve before continuing. It takes an array of promises as its argument and returns a new promise that resolves with an array of results.
+> ```javascript
+>  Promise.all( [asyncOperation1(), asyncOperation2(), asyncOperation3()] )
+>    .then( (results) => { // do something with results array } )
+>    .catch( (error) => { // Handle the error} );
+> ```
 
 - - -
 
