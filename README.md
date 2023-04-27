@@ -175,6 +175,26 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 
 &emsp;This technique can be used in variety of scenarios where large number of tasks need to be processed without blocking the event loop. For example, it could be used in financial trading system to process a large number of trades or in logistics system to process a large number of shipping requests.
 
+#### queueMicrotask()
+&emsp;This method provides a way to schedule a microtask to be executed at the end of the current task, but before the next task in the event loop.
+> _It takes function as its argument, which will be executed as microtask. Function is added to the end of microtask queue, and it will be executed as soon as current task is complete, but before any regular tasks in the event loop._
+> > ```javascript
+> >  function example() {
+> >    console.log('Task 1');  // => 1
+> >    queueMicrotask(() => {
+> >      console.log('Microtask 1');  // => 3
+> >    });
+> >    console.log('Task 2');  // => 2
+> >    queueMicrotask(() => {
+> >      console.log('Microtask 2');  // => 4
+> >    });
+> >  }
+> >  
+> >  example();
+> > ```
+
+&emsp;**queueMicrotask()** can be useful for scheduling asynchronous work that needs to be executed as soon as possible, but with higher priority than regular tasks. It can also be used to ensure that certain operations are executed in the correct order, even if they are initiated asynchronously.
+
 
 ### <a name="promises"></a>📖 ES6 introduced Promises
 &emsp;Instead of executing function and waiting for it to finish before moving on to next one, **promises** allow you to execute function and move on to next one while first function is still running. **Promise** will then return result of function when it is done.
