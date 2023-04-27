@@ -307,6 +307,13 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 >    .catch( (error) => { // Handle the error} );
 > ```
 
+&emsp;**.race()** method is similar to Promise.all(), but it only waits for the first promise to be fulfilled or rejected. It takes an array of promises as its argument and returns a new promise that resolves or rejects with the result of the first promise to be settled.
+> ```javascript
+>  Promise.race( [asyncOperation1(), asyncOperation2(), asyncOperation3()] )
+>    .then( (result) => { // do something with result} )
+>    .catch( (error) => { // handle the error} );
+> ```
+
 - - -
 
 ### <a name="asyncAwait"></a>📖 ES7 introduced Async/Await
