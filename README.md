@@ -386,10 +386,24 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 > >  };
 > > ```
 
+> _You can use Promise.all() to execute multiple promises at once and wait for all of them to complete before moving on._
+> > ```javascript
+> >  async function example() {
+> >    // to fetch data from two different URLs at the same time
+> >    const [result1, result2] = await Promise.all( [
+> >      fetch('https://jsonplaceholder.typicode.com/todos/1'),
+> >      fetch('https://jsonplaceholder.typicode.com/todos/2')
+> >    ] );
+> >    // to wait for both promises to be resolved
+> >    const data1 = await result1.json();
+> >    const data2 = await result2.json();
+> >      console.log(data1);
+> >      console.log(data2);
+> >  }
+> > ```
+
 - - -
 
 &emsp;Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
-
-- - -
 
 &emsp;Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-Programming-Node.js/tree/main/codeSamples)...
