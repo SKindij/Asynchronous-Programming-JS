@@ -311,7 +311,7 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 > >      .then((result) => { // order processing was successful, send confirmation to customer
 > >        return sendOrderConfirmation(order.email);
 > >      })
-> >      .catch((error) => { // handle any errors that occurred during payment processing or order processing
+> >      .catch((error) => { // handle errors that occurred during payment processing or order processing
 > >        console.error(error);
 > >        return sendOrderErrorNotification(order.email, error.message);
 > >      });
@@ -337,30 +337,59 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 - - -
 
 ### <a name="asyncAwait"></a>📖 ES7 introduced Async/Await
-&emsp;With the async and await keywords, we can create async functions which implicitly return a promise.<br>
+&emsp;It is feature in JS that makes it easier to work with promises. With async/await, you can write asynchronous code that looks more like synchronous code, making it easier to understand and maintain.\
 
-&emsp;When encountering an ``await`` keyword, the execution of the ``async function`` body gets paused ✋🏼. And the rest of the ``async function`` gets run in a **microtask** instead of a regular task. In that time the ***JS engine*** jumps out of the async function and continues running the code in the ***execution context*** in which the async function got called 🏃🏽‍♀️ (_for example, the global execution context_).
+&emsp;When encountering ``await`` keyword, execution of ``async function`` body gets paused ✋🏼. And rest of ``async function`` gets run in a **microtask** instead of regular task. In that time the ***JS engine*** jumps out of async function and continues running the code in the ***execution context*** in which async function got called 🏃🏽‍♀️ (_for example, global execution context_).
 
 ```javascript
-	function checkRequestCorrectness(request) {
-		return new Promise( (resolve, reject) => {
-			if (request == 'SKJ.com') { resolve(`Request is correct. :) Connected to ${ request}`);
-			} else { reject(`Connection failed :( . Query to ${ request} is invalid.`); }
-		} );
-	};
-	async function doStuff(request) {
-		console.log(`you have attempted a request to ${ request}`);
-		try { const response = await checkRequestCorrectness(request);
-			console.log(response);
-		} catch (err) {	console.log(err); }
-	};
-	doStuff('ERG.com');  doStuff('SKJ.com');   doStuff('SMT.com');
+   function checkRequestCorrectness(request) {
+      return new Promise( (resolve, reject) => {
+         if (request == 'SKJ.com') { resolve(`Request is correct. :) Connected to ${ request}`);
+         } else { reject(`Connection failed :( . Query to ${ request} is invalid.`); }
+      } );
+   };
+   // async keyword is used to mark function as asynchronous
+   async function doStuff(request) {
+      console.log(`you have attempted a request to ${ request}`);
+      // use await keyword to wait for promise to be resolved
+      try { const response = await checkRequestCorrectness(request);
+         console.log(response);
+      } catch (err) { console.log(err); }
+   };
+   // When you call an async function, it returns a promise.
+   doStuff('ERG.com');  doStuff('SKJ.com');   doStuff('SMT.com');
     console.log('The results of the answers will be as follows:');
 ```
 
-___
+> _Let's say you have web application that tracks orders for your manufacturing company.\
+> When new order is placed, you need to send email to customer to confirm order and to your production team to start processing order.\
+> &emsp;You also need to update order status in your database._\
+> &emsp;_You can use async/await to make sure that each of these tasks happens in correct order, and that you don't move on to next task until previous one has completed._
+> > ```javascript
+> >  async function processOrder(order) {
+> >    // send confirmation email to customer
+> >      await sendConfirmationEmail(order.customerEmail);
+> >    // update order status in database
+> >      await updateOrderStatus(order.id, 'processing');
+> >    // send notification email to production team
+> >      await sendNotificationEmail('production@manufacturingcompany.com', `New order received: ${order.id}`);
+> >  };
+> >  
+> >  async function sendConfirmationEmail(email) {
+> >    // code to send confirmation email here
+> >  };
+> >  async function updateOrderStatus(orderId, status) {
+> >    // code to update order status in database here
+> >  };
+> >  async function sendNotificationEmail(email, message) {
+> >    // code to send notification email here
+> >  };
+> > ```
+
+- - -
+
 &emsp;Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
 
-___
-&emsp;Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-JS-Nodejs/tree/main/codeApplication)...
+- - -
 
+&emsp;Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-Programming-Node.js/tree/main/codeSamples)...
