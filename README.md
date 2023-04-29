@@ -410,6 +410,63 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 
 - - -
 
+&emsp;**Async generator** is a special type of function that returns an async iterable. It allows you to produce a sequence of values asynchronously and lazily, i.e., it only generates the next value when it's requested by the consumer of the iterator.
+> _Here's an example of an async generator that generates random numbers:_
+> > ```javascript
+> >  // function is async generator that uses infinite loop to generate random numbers
+> >  async function* randomNumberGenerator() {
+> >    while (true) {
+> >  // it yields each random number and then waits for 1 sec using before generating next
+> >      yield Math.random();
+> >      await new Promise( resolve => setTimeout(resolve, 1000) );
+> >    }
+> >  };
+> > ```
+> _You can then use this async generator to consume sequence of random numbers asynchronously, like this:_
+> > ```javascript
+> >  // function creates async iterator using async generator
+> >  async function consumeRandomNumbers() {
+> >    const randomNumberIterator = randomNumberGenerator();
+> >    // to consume each number asynchronously and log it to console
+> >    for await (const number of randomNumberIterator) {
+> >      console.log(number);
+> >    }
+> >  };
+> > ```
+
+> &emsp;_Let's say you're building real-time chat app using Node.js and WebSocket technology. You want to implement feature that allows users to see list of active users in chat room, which is updated in real-time as users join or leave the chat._\
+> &emsp;_To implement this feature, you could create async generator function that generates sequence of active users, which is updated asynchronously as users join or leave the chat._
+> > ```javascript
+> >  async function* activeUserGenerator() {
+> >    const activeUsers = new Set();
+> >    while (true) {
+> >      // wait for user to join or leave the chat
+> >      const user = await new Promise( resolve => {
+> >       // function listens for 'user-join' and 'user-leave' events from chatRoom object
+> >        chatRoom.on('user-join', user => resolve(user));
+> >        chatRoom.on('user-leave', user => resolve(user));
+> >      } );
+> >      // update set of active users
+> >      if (chatRoom.has(user)) { activeUsers.add(user);
+> >      } else { activeUsers.delete(user); }
+> >      // yield current list of active users
+> >      yield Array.from(activeUsers);
+> >    }
+> >  }
+> > ```
+> _You can then use this async generator to consume sequence of active users asynchronously in your chat application, like this:_
+> > ```javascript
+> >  async function renderActiveUsers() {
+> >    const activeUserIterator = activeUserGenerator();
+> >    for await (const activeUsers of activeUserIterator) {
+> >      // render the list of active users on the screen
+> >      renderActiveUserList(activeUsers);
+> >    }
+> >  }
+> > ```
+
+- - -
+
 &emsp;``util.promisify()`` is utility that allows you to convert function that uses Node.js-style callback pattern into function that returns promise.\
 > _Node.js-style callbacks usually follow pattern of having error object as first argument and result as second argument, like this:_
 > > ```javascript
