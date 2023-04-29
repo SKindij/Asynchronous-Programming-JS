@@ -407,3 +407,37 @@ Use ``nextTick()`` when you want to make sure that in next event loop iteration 
 &emsp;Did you notice how **async functions** are different compared to a **promise.then**? The ``await`` keyword suspends the ``async function``, whereas the ``Promise`` body would've kept on being executed if we would've used ``.then``!
 
 &emsp;Read more in the [section with code examples](https://github.com/SKindij/Asynchronous-Programming-Node.js/tree/main/codeSamples)...
+
+- - -
+
+&emsp;``util.promisify()`` is utility that allows you to convert function that uses Node.js-style callback pattern into function that returns promise.\
+> _Node.js-style callbacks usually follow pattern of having error object as first argument and result as second argument, like this:_
+> > ```javascript
+> >  function readFile(path, callback) {
+> >    fs.readFile(path, (err, data) => {
+> >      if (err) {
+> >        callback(err, null);
+> >      } else {
+> >        callback(null, data);
+> >      }
+> >    });
+> >  }
+> > ```
+> _With util.promisify(), you can convert this function into promise-based function, like this:_
+> > ```javascript
+> >  const util = require('util');
+> >  const fs = require('fs');
+> >    // to convert fs.readFile() into promise-based function readFile
+> >    const readFile = util.promisify(fs.readFile);
+> >  
+> >  async function example() {
+> >    try {
+> >      // to wait for data to be read from file before logging it to console
+> >      const data = await readFile('path/to/file.txt');
+> >      console.log(data.toString());
+> >    } catch (err) {
+> >      console.error(err);
+> >    }
+> >  }
+> > ```
+
